@@ -10,14 +10,15 @@ Teaupla::Teaupla(string nomFichier){
   f.open(nomFichier);
   string line;
   unsigned int i = 0;
-  int maxY = 0;
+  int maxX = 0;
+    //lecture fichier et init des Zecas
     while(getline(f,line)){
       for (unsigned int j = 0; j < line.length(); j++){
         tab[i].push_back(Zeca(i,j,line.at(j)));
       }
-      maxY = max(maxY,(int)line.length());
+      maxX = max(maxX,(int)line.length());   //je prends le max des largeurs
       i++;
     }
-    sizeX = i+1;
-    sizeY = (unsigned int) maxY + 1;
+    sizeY = i+1;   // on sauvegarde la taille du platea ca servira surement
+    sizeX = (unsigned int) maxX + 1;
 }
