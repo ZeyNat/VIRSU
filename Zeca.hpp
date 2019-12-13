@@ -16,6 +16,7 @@ class Zeca{
   public:
     Zeca();
     Zeca(int x, int y, char e);
+    void setEtat(etat e);
 };
 
 #endif
