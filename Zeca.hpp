@@ -10,7 +10,7 @@ class Zeca{
   private:
     int X;
     int Y;
-    //char etat;//oueurj = J / streumons = s / remus = X / diams = $ / geurchars = * /teupors = p / vide =' '
+    char etat;//oueurj = J / streumons = s / remus = X / diams = $ / geurchars = * /teupors = p / vide =' '
 
 
   public:
