@@ -1,4 +1,5 @@
 #include<iostream>
+#include <vector>
 #include "Zeca.hpp"
 
 #ifndef TEAUPLA
@@ -8,9 +9,10 @@ class Teaupla {
   private :
     unsigned int sizeX;
     unsigned int sizeY;
-    Zeca[sizeX][sizeY] tab;
+    std::vector<std::vector<Zeca>> tab;
   public :
-    Teaupla();
+    Teaupla(std::string nomFichier);
+    void affiche();
 };
 
 
