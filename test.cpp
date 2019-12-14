@@ -7,7 +7,7 @@ using namespace std;
 
 
 int main() {
-  string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/p1.txt";  //a modifier pour toi !
+  string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/p1.txt";  //a modifier pour toi !
   Teaupla T(teau);
   T.affiche();
   //tests dimensions
@@ -17,7 +17,7 @@ int main() {
   //Tests Oueurj
   Oueurj J = T.getOueurj();
   assert(J.getX()==6);
-  assert(J.getY()==5);
+  assert(J.getY()==4);
 
   //Tests posValide
   assert(T.posValide(1,1));
@@ -26,6 +26,6 @@ int main() {
   assert(!T.posValide(18,1));
   assert(!T.posValide(5,7));
 
-
+  T.deplaceOueurj();
   return 0;
 }

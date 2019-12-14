@@ -9,10 +9,10 @@ void Oueurj::setLocalisation(int x, int y){
   Y=y;
 }
 
-
 int Oueurj::getX(){
   return X;
 }
+
 int Oueurj::getY(){
   return Y;
 }
