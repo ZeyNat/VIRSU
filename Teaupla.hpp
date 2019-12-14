@@ -21,7 +21,8 @@ class Teaupla {
     bool posValide(int x, int y);   //Le Oueurj ne peut pas aller sur les reumus ni les teupors
 
     /* Deplacement du Oueurj : Nord = 'z' / Nord-Est = 'e' / Nord-Ouest = 'a'
-       Ouest = 'q' / Est = 'd' / Sud = 'x' / SudEst = 'c' / Sud-Ouest = 'w'   */
+       Ouest = 'q' / Est = 'd' / Sud = 'x' / SudEst = 'c' / Sud-Ouest = 'w'
+       quitter = 0 */
     void deplaceOueurj();
 
 };
