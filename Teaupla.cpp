@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "Teaupla.hpp"
 #include "Zeca.hpp"
+#include "Oueurj.hpp"
 using namespace std;
 
 Teaupla::Teaupla(string nomFichier){
@@ -36,5 +37,28 @@ void Teaupla::affiche(){
     }
     cout << endl;
   }
+}
 
+unsigned int Teaupla::getMaxX(){ return sizeX;}
+unsigned int Teaupla::getMaxY(){ return sizeY;}
+
+
+Oueurj Teaupla::getOueurj(){
+  for (int i = 0;(unsigned int) i < sizeY; i++){
+    for (int j = 0; (unsigned int) j < sizeX; j++){
+      if(tab.at(i).at(j).getEtat() =='J'){
+        return Oueurj(j,i);
+      }
+    }
+  }
+  return Oueurj(0,0);     //il faudrait une exception mais on verra plus tard
+}
+
+// pos non valide =  hors teaupla, reumu, teupor
+bool Teaupla::posValide(int x, int y){
+  if ((unsigned int) x < sizeX && (unsigned int) y < sizeY &&
+      tab[y][x].getEtat()!='X' && tab[y][x].getEtat()!='-'){
+    return true;
+  }
+  return false;
 }

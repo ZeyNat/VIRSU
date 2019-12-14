@@ -9,6 +9,8 @@ class Oueurj{
   public:
     Oueurj(int x, int y);
     void setLocalisation(int x, int y);
+    int getX();  //fcts de test
+    int getY();  //je sais pas si on les gardera
 
 };
 #endif

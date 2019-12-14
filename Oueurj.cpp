@@ -8,3 +8,11 @@ void Oueurj::setLocalisation(int x, int y){
   X=x;
   Y=y;
 }
+
+
+int Oueurj::getX(){
+  return X;
+}
+int Oueurj::getY(){
+  return Y;
+}
