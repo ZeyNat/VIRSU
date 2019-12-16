@@ -16,3 +16,16 @@ int Oueurj::getX(){
 int Oueurj::getY(){
   return Y;
 }*/
+
+
+void Oueurj::incrementeDiams(){
+  nbDiams++;
+}
+
+void Oueurj::decrementeDiams(){
+  nbDiams--;
+}
+
+int Oueurj::getDiams(){
+  return nbDiams;
+}

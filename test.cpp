@@ -8,8 +8,8 @@ using namespace std;
 
 
 int main() {
-  //string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/p1.txt";  //pour toi
-  string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/p1.txt";  //pour moi
+  string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/p1.txt";  //pour toi
+  //string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/p1.txt";  //pour moi
   Teaupla T(teau);
   T.affiche();
   //tests dimensions

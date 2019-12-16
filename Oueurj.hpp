@@ -13,6 +13,8 @@ class Oueurj : public _Deplacable{
     //virtual void setLocalisation(int x, int y);
     //int getX();  //fcts de test
     //int getY();  //je sais pas si on les gardera
-
+    void incrementeDiams();
+    void decrementeDiams();
+    int getDiams();
 };
 #endif

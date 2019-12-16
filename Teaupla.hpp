@@ -35,6 +35,10 @@ class Teaupla {
     void deplaceOueurj();
     void deplaceStreumons();   //pas encore ecrite
 
+    bool verifieDiams(int x, int y); //verifie si la zeca est un diams
+    void updateDiams(); //mise à jour des diams ramassés par le oueurj
+    void afficheDiams(Oueurj J); //affiche les Diams que possède le oueurj
+    
 };
 
 #endif

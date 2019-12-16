@@ -81,19 +81,31 @@ bool Teaupla::posValide(int x, int y){
 }
 
 
+bool Teaupla::verifieDiams(int x, int y){
+  return (tab[y][x].getEtat()=='$');
+}
+
+void Teaupla::afficheDiams(Oueurj J){
+  cout<<"Diams : " << J.getDiams() << endl;
+}
+
+
 void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée clavier
   Oueurj J = getOueurj();
   char mouv;
+  afficheDiams(J);
   cout<<"Jouer"<<endl;
   cin>>mouv;
 
   while(mouv!='0'){ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
     int x = J.getX();
     int y = J.getY();
-    affiche();
 
     //deplacement au Nord
     if(mouv=='z' && posValide(x,y-1)){
+      if (verifieDiams(x,y-1)){ //si le oueurj veut recuperer un diams
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x,y-1);
       cout<<"Nouvelle localisation de J est : (" << x << ", " << y-1 << ")" << endl; //pour tester
@@ -103,6 +115,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement au Nord Est
     if(mouv=='e' && posValide(x+1,y-1)){
+      if (verifieDiams(x+1,y-1)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y-1);
       cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y-1 << ")" << endl;
@@ -112,6 +127,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement au Nord Ouest
     if(mouv=='a' && posValide(x-1,y-1)){
+      if (verifieDiams(x-1,y-1)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x-1,y-1);
       cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y-1 << ")" << endl;
@@ -121,6 +139,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement a l'Est
     if(mouv=='d' && posValide(x+1,y)){
+      if (verifieDiams(x+1,y)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y);
       cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y << ")" << endl;
@@ -130,6 +151,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement a l'Ouest
     if(mouv=='q' && posValide(x-1,y)){
+      if (verifieDiams(x-1,y)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x-1,y);
       cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y << ")" << endl;
@@ -139,6 +163,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement au Sud
     if(mouv=='x' && posValide(x,y+1)){
+      if (verifieDiams(x,y-1)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x,y+1);
       cout<<"Nouvelle localisation de J est : (" << x << ", " << y+1 << ")" << endl;
@@ -148,6 +175,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement au Sud Est
     if(mouv=='c' && posValide(x+1,y+1)){
+      if (verifieDiams(x+1,y+1)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y+1);
       cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y+1 << ")" << endl;
@@ -157,6 +187,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
 
     //deplacement au Sud Ouest
     if(mouv=='w' && posValide(x-1,y+1)){
+      if (verifieDiams(x-1,y+1)){
+        J.incrementeDiams();
+      }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x-1,y+1);
       cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y+1 << ")" << endl;
@@ -165,6 +198,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     }
 
     affiche();
+    afficheDiams(J);
     cout<<"Jouer"<<endl;
     cin>>mouv;
   }
