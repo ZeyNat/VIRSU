@@ -4,9 +4,10 @@
 #include "Teaupla.hpp"
 #include "Zeca.hpp"
 #include "Oueurj.hpp"
+#include "Streumon.hpp"
 using namespace std;
 
-Teaupla::Teaupla(string nomFichier){
+Teaupla::Teaupla(string nomFichier) {
   ifstream f;
   f.open(nomFichier);
   string line;
@@ -26,8 +27,22 @@ Teaupla::Teaupla(string nomFichier){
     sizeY = i;   // on sauvegarde la taille du teaupla ca servira surement
     sizeX = (unsigned int) maxX;
 
+    streumons = construitStreumons();   //on construit la liste de streumons
 }
 
+vector<Streumon> Teaupla::construitStreumons(){
+  vector<Streumon> s;
+  cout << "hey" << endl;
+  for (int i = 0;(unsigned int) i < sizeY; i++){
+    for (int j = 0; (unsigned int) j < sizeX; j++){
+      if(tab.at(i).at(j).getEtat() =='s'){
+        s.push_back(Streumon(j,i));
+        cout << "hey" << endl;
+      }
+    }
+  }
+  return s;
+}
 
 void Teaupla::affiche(){
   for (unsigned int i = 0 ; i < sizeY; i++){
@@ -40,6 +55,7 @@ void Teaupla::affiche(){
 
 unsigned int Teaupla::getMaxX(){ return sizeX;}
 unsigned int Teaupla::getMaxY(){ return sizeY;}
+vector<Streumon> Teaupla::getStreumons() {return streumons;}
 
 
 Oueurj Teaupla::getOueurj(){
@@ -52,6 +68,8 @@ Oueurj Teaupla::getOueurj(){
   }
   return Oueurj(0,0);     //il faudrait une exception mais on verra plus tard
 }
+
+
 
 // pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posValide(int x, int y){
