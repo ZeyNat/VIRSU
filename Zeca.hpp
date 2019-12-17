@@ -16,6 +16,8 @@ class Zeca{
   public:
     Zeca();
     Zeca(int x, int y, char e);
+    int getX();
+    int getY();
     void setEtat(char e);
     char getEtat();
 };

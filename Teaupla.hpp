@@ -9,13 +9,19 @@ using namespace std;
 #define TEAUPLA
 
 class Teaupla {
+
   private :
     unsigned int sizeX;
     unsigned int sizeY;
     vector<vector<Zeca> > tab;   //plateau des zecas. Attention il est a lenvers. cest tab[col][lig]
-    vector<Streumon> streumons;
 
+    vector<Streumon> streumons;
     vector<Streumon> construitStreumons(); //simple methode de construction pour alleger le contructeur
+
+    vector<Zeca> teupors;
+    vector<Zeca> construitTeuports();
+
+
 
   public :
     Teaupla(string nomFichier);   // on construit avec un fichier texte
@@ -24,7 +30,11 @@ class Teaupla {
     void affiche();   //plus tard on fera de la surcharge d'operateur
 
     Oueurj getOueurj();   //on cree le oueurj en le cherchant sur le teaupla
+
     vector<Streumon> getStreumons();    //fct de test, on pourra la virer
+
+    vector<Zeca> getTeuports();
+
 
     bool posValide(int x, int y);   //Le Oueurj ne peut pas aller sur les reumus ni les teupors
 
@@ -38,7 +48,8 @@ class Teaupla {
     bool verifieDiams(int x, int y); //verifie si la zeca est un diams
     void updateDiams(); //mise à jour des diams ramassés par le oueurj
     void afficheDiams(Oueurj J); //affiche les Diams que possède le oueurj
-    
+
+    void ouvreTeuport(Oueurj J); //une teuport s'ouvre lorsque Oueurj collecte un diams
 };
 
 #endif

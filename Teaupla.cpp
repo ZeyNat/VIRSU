@@ -28,21 +28,42 @@ Teaupla::Teaupla(string nomFichier) {
     sizeX = (unsigned int) maxX;
 
     streumons = construitStreumons();   //on construit la liste de streumons
+
+    teupors = construitTeuports();
 }
+
+
+
 
 vector<Streumon> Teaupla::construitStreumons(){
   vector<Streumon> s;
-  cout << "hey" << endl;
   for (int i = 0;(unsigned int) i < sizeY; i++){
     for (int j = 0; (unsigned int) j < sizeX; j++){
       if(tab.at(i).at(j).getEtat() =='s'){
         s.push_back(Streumon(j,i));
-        cout << "hey" << endl;
       }
     }
   }
   return s;
 }
+
+
+
+
+vector<Zeca> Teaupla::construitTeuports(){
+  vector<Zeca> t;
+  for (int i = 0;(unsigned int) i < sizeY; i++){
+    for (int j = 0; (unsigned int) j < sizeX; j++){
+      if(tab.at(i).at(j).getEtat() =='-'){
+        t.push_back(Zeca(i,j,'-'));
+      }
+    }
+  }
+  return t;
+}
+
+
+
 
 void Teaupla::affiche(){
   for (unsigned int i = 0 ; i < sizeY; i++){
@@ -53,9 +74,21 @@ void Teaupla::affiche(){
   }
 }
 
+
+
+
 unsigned int Teaupla::getMaxX(){ return sizeX;}
+
+
 unsigned int Teaupla::getMaxY(){ return sizeY;}
+
+
 vector<Streumon> Teaupla::getStreumons() {return streumons;}
+
+
+vector<Zeca> Teaupla::getTeuports() {return teupors;}
+
+
 
 
 Oueurj Teaupla::getOueurj(){
@@ -71,6 +104,7 @@ Oueurj Teaupla::getOueurj(){
 
 
 
+
 // pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posValide(int x, int y){
   if ((unsigned int) x < sizeX && (unsigned int) y < sizeY &&
@@ -81,13 +115,19 @@ bool Teaupla::posValide(int x, int y){
 }
 
 
+
+
 bool Teaupla::verifieDiams(int x, int y){
   return (tab[y][x].getEtat()=='$');
 }
 
+
+
 void Teaupla::afficheDiams(Oueurj J){
   cout<<"Diams : " << J.getDiams() << endl;
 }
+
+
 
 
 void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée clavier
@@ -197,10 +237,21 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       cout<<"Vous vous etes deplacer au Sud Ouest"<<endl;
     }
 
+    ouvreTeuport(J); //on ouvre une porte si Oueurj a gagné un Diams
     affiche();
     afficheDiams(J);
     cout<<"Jouer"<<endl;
     cin>>mouv;
   }
+}
 
+
+//ouvre une porte aleatoirement lorsque Oueurj gagne un Diams
+void Teaupla::ouvreTeuport(Oueurj J){
+    int i=rand()%(getTeuports().size());
+    if(teupors.at(i).getEtat()=='-' && J.getDiams()>0){
+      cout<<"OULALAAAA"<<endl;
+      teupors.at(i).setEtat('+');
+      tab[teupors.at(i).getX()][teupors.at(i).getY()].setEtat('+');
+    }
 }

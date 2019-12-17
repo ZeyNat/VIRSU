@@ -8,8 +8,8 @@ using namespace std;
 
 
 int main() {
-  string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/p1.txt";  //pour toi
-  //string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/p1.txt";  //pour moi
+  string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/p1.txt";  //pour moi haha
+  //string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/p1.txt";  //pour toi hihi ;)
   Teaupla T(teau);
   T.affiche();
   //tests dimensions
@@ -25,6 +25,10 @@ int main() {
   cout << T.getStreumons().size() << endl;
   assert(T.getStreumons().size()==2);
 
+  //Test TEUPORTS
+  cout << T.getTeuports().size() << endl;
+  assert(T.getTeuports().size()==2);
+
   //Tests posValide
   assert(T.posValide(1,1));
   assert(!T.posValide(0,0));
@@ -32,6 +36,8 @@ int main() {
   assert(!T.posValide(18,1));
   assert(!T.posValide(5,7));
 
+
   T.deplaceOueurj();
+
   return 0;
 }

@@ -12,3 +12,11 @@ void Zeca::setEtat(char e){
 char Zeca::getEtat(){
   return etat;
 }
+
+int Zeca::getX(){
+  return X;
+}
+
+int Zeca::getY(){
+  return Y;
+}
