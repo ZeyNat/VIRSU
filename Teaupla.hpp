@@ -14,11 +14,10 @@ class Teaupla {
     unsigned int sizeX;
     unsigned int sizeY;
     vector<vector<Zeca> > tab;   //plateau des zecas. Attention il est a lenvers. cest tab[col][lig]
-
     vector<Streumon> streumons;
-    vector<Streumon> construitStreumons(); //simple methode de construction pour alleger le contructeur
-
+    vector<Streumon> construitStreumons();  //fct consstruction pour alleger constructeur
     vector<Zeca> teupors;
+    unsigned int teuporsOuvertes;
     vector<Zeca> construitTeuports();
 
 
@@ -31,7 +30,7 @@ class Teaupla {
 
     Oueurj getOueurj();   //on cree le oueurj en le cherchant sur le teaupla
 
-    vector<Streumon> getStreumons();    //fct de test, on pourra la virer
+    vector<Streumon> getStreumons();    // renvoie la liste des streumons
 
     vector<Zeca> getTeuports();
 
@@ -43,13 +42,12 @@ class Teaupla {
        quitter = 0 */
 
     void deplaceOueurj();
-    void deplaceStreumons();   //pas encore ecrite
+    bool deplaceStreumons(Oueurj J);   //deplace les streumons vers le joueur J
 
     bool verifieDiams(int x, int y); //verifie si la zeca est un diams
     void updateDiams(); //mise à jour des diams ramassés par le oueurj
-    void afficheDiams(Oueurj J); //affiche les Diams que possède le oueurj
 
-    void ouvreTeuport(Oueurj J); //une teuport s'ouvre lorsque Oueurj collecte un diams
+    void ouvreTeuport(); //une teuport s'ouvre lorsque Oueurj collecte un diams
 };
 
 #endif

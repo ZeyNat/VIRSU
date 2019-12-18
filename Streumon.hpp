@@ -7,9 +7,13 @@ using namespace std;
 #define STREUMON
 
 class Streumon : public _Deplacable {
+  private :
+    char sousSesPieds;
   public :
     Streumon();
     Streumon(int x,int y);
+    char getSousSesPieds();
+    void setSousSesPieds(char c);
 };
 
 

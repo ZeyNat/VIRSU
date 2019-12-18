@@ -16,5 +16,6 @@ class Oueurj : public _Deplacable{
     void incrementeDiams();
     void decrementeDiams();
     int getDiams();
+    void afficheDiams(); //affiche les Diams que possède le oueurj
 };
 #endif

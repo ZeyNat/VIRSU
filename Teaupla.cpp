@@ -7,7 +7,7 @@
 #include "Streumon.hpp"
 using namespace std;
 
-Teaupla::Teaupla(string nomFichier) {
+Teaupla::Teaupla(string nomFichier) : teuporsOuvertes{0} {
   ifstream f;
   f.open(nomFichier);
   string line;
@@ -27,8 +27,7 @@ Teaupla::Teaupla(string nomFichier) {
     sizeY = i;   // on sauvegarde la taille du teaupla ca servira surement
     sizeX = (unsigned int) maxX;
 
-    streumons = construitStreumons();   //on construit la liste de streumons
-
+    streumons = construitStreumons();
     teupors = construitTeuports();
 }
 
@@ -79,12 +78,9 @@ void Teaupla::affiche(){
 
 unsigned int Teaupla::getMaxX(){ return sizeX;}
 
-
 unsigned int Teaupla::getMaxY(){ return sizeY;}
 
-
 vector<Streumon> Teaupla::getStreumons() {return streumons;}
-
 
 vector<Zeca> Teaupla::getTeuports() {return teupors;}
 
@@ -123,21 +119,18 @@ bool Teaupla::verifieDiams(int x, int y){
 
 
 
-void Teaupla::afficheDiams(Oueurj J){
-  cout<<"Diams : " << J.getDiams() << endl;
-}
-
-
 
 
 void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée clavier
   Oueurj J = getOueurj();
+  bool perdu = false;
   char mouv;
-  afficheDiams(J);
-  cout<<"Jouer"<<endl;
-  cin>>mouv;
+  J.afficheDiams();
 
-  while(mouv!='0'){ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
+
+  do{ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
+    cout<<"Jouer"<<endl;
+    cin>>mouv;
     int x = J.getX();
     int y = J.getY();
 
@@ -145,6 +138,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='z' && posValide(x,y-1)){
       if (verifieDiams(x,y-1)){ //si le oueurj veut recuperer un diams
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x,y-1);
@@ -157,6 +151,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='e' && posValide(x+1,y-1)){
       if (verifieDiams(x+1,y-1)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y-1);
@@ -169,6 +164,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='a' && posValide(x-1,y-1)){
       if (verifieDiams(x-1,y-1)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x-1,y-1);
@@ -181,6 +177,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='d' && posValide(x+1,y)){
       if (verifieDiams(x+1,y)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y);
@@ -193,6 +190,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='q' && posValide(x-1,y)){
       if (verifieDiams(x-1,y)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x-1,y);
@@ -205,6 +203,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='x' && posValide(x,y+1)){
       if (verifieDiams(x,y-1)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x,y+1);
@@ -217,6 +216,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='c' && posValide(x+1,y+1)){
       if (verifieDiams(x+1,y+1)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y+1);
@@ -229,6 +229,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='w' && posValide(x-1,y+1)){
       if (verifieDiams(x-1,y+1)){
         J.incrementeDiams();
+        ouvreTeuport();
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x-1,y+1);
@@ -237,21 +238,121 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       cout<<"Vous vous etes deplacer au Sud Ouest"<<endl;
     }
 
-    ouvreTeuport(J); //on ouvre une porte si Oueurj a gagné un Diams
+    perdu = deplaceStreumons(J);
+
     affiche();
-    afficheDiams(J);
-    cout<<"Jouer"<<endl;
-    cin>>mouv;
-  }
+    cout << "Vous avez " << J.getDiams() << " diams." << endl;
+  } while(mouv!='0' && !perdu);
+  cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;
 }
 
 
-//ouvre une porte aleatoirement lorsque Oueurj gagne un Diams
-void Teaupla::ouvreTeuport(Oueurj J){
-    int i=rand()%(getTeuports().size());
-    if(teupors.at(i).getEtat()=='-' && J.getDiams()>0){
-      cout<<"OULALAAAA"<<endl;
-      teupors.at(i).setEtat('+');
-      tab[teupors.at(i).getX()][teupors.at(i).getY()].setEtat('+');
+//ouvre une porte aleatoirement
+void Teaupla::ouvreTeuport(){
+    if(teupors.size() == teuporsOuvertes)  {return;}
+    int i;
+    do{
+      i=rand()%(getTeuports().size());
+    } while(teupors.at(i).getEtat()!='-');
+    cout<<"OULALAAAA"<<endl;
+    teupors.at(i).setEtat('+');
+    tab[teupors.at(i).getX()][teupors.at(i).getY()].setEtat('+');
+    teuporsOuvertes++;
+}
+
+
+//return true si un streumon a foubé le oueurj.
+bool Teaupla::deplaceStreumons(Oueurj J){
+  int xJ = J.getX();
+  int yJ = J.getY();
+  int x,y;
+  bool dep;
+
+  for (int i = 0; (unsigned int) i < streumons.size(); i++){
+    dep = false;
+    x = streumons.at(i).getX();
+    y = streumons.at(i).getY();
+    tab[y][x].setEtat(streumons.at(i).getSousSesPieds());
+    cout << x << ',' << y << endl;
+
+    //SE
+    if (x < xJ && y < yJ && posValide(x+1,y+1) && !dep){
+      cout << "SE" << endl;
+      streumons.at(i).setLocalisation(x+1,y+1);
+      streumons.at(i).setSousSesPieds(tab[y+1][x+1].getEtat());
+      tab[y+1][x+1].setEtat('s');
+      dep = true;
     }
+
+    //NE
+    if (x < xJ && y > yJ && posValide(x+1,y-1) && !dep){
+      cout << "NE" << endl;
+      streumons.at(i).setLocalisation(x+1,y-1);
+      streumons.at(i).setSousSesPieds(tab[y-1][x+1].getEtat());
+      tab[y-1][x+1].setEtat('s');
+      dep = true;
+    }
+
+    //SO
+    if(x > xJ && y < yJ && posValide(x-1,y+1) && !dep){
+      cout << "SO" << endl;
+      streumons.at(i).setLocalisation(x-1,y+1);
+      streumons.at(i).setSousSesPieds(tab[y+1][x-1].getEtat());
+      tab[y+1][x-1].setEtat('s');
+      dep = true;
+    }
+
+    //NO
+    if(x > xJ && y > yJ && posValide(x-1,y-1) && !dep){
+      cout << "NO" << endl;
+      streumons.at(i).setLocalisation(x-1,y-1);
+      streumons.at(i).setSousSesPieds(tab[y-1][x-1].getEtat());
+      tab[y-1][x-1].setEtat('s');
+      dep = true;
+    }
+
+    //O
+    if (x > xJ && posValide(x-1,y) && !dep){
+      cout << "O" << endl;
+      streumons.at(i).setLocalisation(x-1,y);
+      streumons.at(i).setSousSesPieds(tab[y][x-1].getEtat());
+      tab[y][x-1].setEtat('s');
+      dep = true;
+    }
+
+    //E
+    if (x < xJ && posValide(x+1,y) && !dep){
+      cout << "E" << endl;
+      streumons.at(i).setLocalisation(x+1,y);
+      streumons.at(i).setSousSesPieds(tab[y][x+1].getEtat());
+      tab[y][x+1].setEtat('s');
+      dep = true;
+    }
+
+    //N
+    if (y > yJ && posValide(x,y-1) && !dep){
+      cout << "N" << endl;
+      streumons.at(i).setLocalisation(x,y-1);
+      streumons.at(i).setSousSesPieds(tab[y-1][x].getEtat());
+      tab[y-1][x].setEtat('s');
+      dep = true;
+    }
+
+    //S
+    if(y < yJ && posValide(x,y+1) && !dep){
+      cout << "S" << endl;
+      streumons.at(i).setLocalisation(x,y+1);
+      streumons.at(i).setSousSesPieds(tab[y+1][x].getEtat());
+      tab[y+1][x].setEtat('s');
+      dep = true;
+    }
+    if (!dep) {
+      tab[y][x].setEtat('s');
+    }
+
+    if(streumons.at(i).getX() == xJ && streumons.at(i).getY() == yJ){
+      return true;
+    }
+  }
+  return false;
 }
