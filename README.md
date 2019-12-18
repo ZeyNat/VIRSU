@@ -6,14 +6,22 @@ Alors ce jeu est fait pour vous ! Incarnez un oueurj, explorez les salles de not
 Mais attention... Les streumons sont affamés et feront tout pour fébou le Oueurj ! NOMNOMNOM !
 
 Le oueurj se déplace de la façon suivante :
-A : NO
+A : NO 
+
 Z : N   
+
 E : NE
+
 Q : O
+
 D : E
+
 W : SO
+
 X : S
+
 C : SE
+
 S : Téléportation sur une case aléatoire.
 
 Pour obtenir une téléportation, il faut ramasser un geurchar '*'.
