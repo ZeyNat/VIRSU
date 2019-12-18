@@ -2,7 +2,7 @@
 LE jeu de survie
 
 Vous rêvez d'aventure ? Vous cherchez la fortune et la gloire ?
-Alors ce jeu est fait pour vous ! Incarnez un oueurj, explorez les salles de notre jondon, collectez des diams et bien plus encore.
+Alors ce jeu est fait pour vous ! Incarnez un oueurj, explorez les salles de le VIRSU, collectez des diams et bien plus encore.
 Mais attention... Les streumons sont affamés et feront tout pour fébou le Oueurj ! NOMNOMNOM !
 
 Le oueurj se déplace de la façon suivante :
@@ -27,7 +27,7 @@ S : Téléportation sur une case aléatoire.
 
 Pour obtenir une téléportation, il faut ramasser un geurchar '*'.
 
-Le but : sortir du jondon indemne en ayant collecté un maximum de diams.
+Le but : sortir de VIRSU indemne en ayant collecté un maximum de diams.
 
 Les teupors sont symbolisées par '-' si elles sont fermées, '+' si elles sont ouvertes.
 Passez une teupor ouverte pour changer de salle.
