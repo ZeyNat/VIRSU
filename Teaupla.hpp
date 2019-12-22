@@ -34,7 +34,6 @@ class Teaupla {
 
     vector<Zeca> getTeuports();
 
-
     bool posValide(int x, int y);   //Le Oueurj ne peut pas aller sur les reumus ni les teupors
 
     /* Deplacement du Oueurj : Nord = 'z' / Nord-Est = 'e' / Nord-Ouest = 'a'
@@ -48,6 +47,10 @@ class Teaupla {
     void updateDiams(); //mise à jour des diams ramassés par le oueurj
 
     void ouvreTeuport(); //une teuport s'ouvre lorsque Oueurj collecte un diams
+
+    bool verifieGeuchars(int x, int y);
+
+    void teleportation(Oueurj J, int x, int y);
 };
 
 #endif
