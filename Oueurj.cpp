@@ -2,7 +2,7 @@
 #include  "Oueurj.hpp"
 using namespace std;
 
-Oueurj::Oueurj(int x, int y,int d): _Deplacable(x,y), nbDiams{d} {}
+Oueurj::Oueurj(int x, int y,int d): _Deplacable(x,y), nbDiams{d}, TP{0} {}
 
 
 void Oueurj::incrementeDiams(){
@@ -20,4 +20,20 @@ void Oueurj::afficheDiams(){
 
 int Oueurj::getDiams(){
   return nbDiams;
+}
+
+bool Oueurj::hasTP(){
+  return TP>0;
+}
+
+void Oueurj::setTP(){
+  TP ++;
+}
+
+void Oueurj::removeTP(){
+  TP --;
+}
+
+unsigned int Oueurj::getTP(){
+  return TP;
 }

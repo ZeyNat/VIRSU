@@ -50,7 +50,7 @@ class Teaupla {
 
     bool verifieGeuchars(int x, int y);
 
-    void teleportation(Oueurj J, int x, int y);
+    void teleportation(Oueurj* J);
 };
 
 #endif

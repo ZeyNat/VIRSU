@@ -1,5 +1,6 @@
-#include<iostream>
+#include <iostream>
 #include <fstream>
+#include <time.h>
 #include <algorithm>
 #include "Teaupla.hpp"
 #include "Zeca.hpp"
@@ -15,20 +16,22 @@ Teaupla::Teaupla(string nomFichier) : teuporsOuvertes{0} {
   int maxX = 0;
   vector<Zeca> v;
     //lecture fichier et init des Zecas
-    while(getline(f,line)){
-      for (unsigned int j = 0; j < line.length(); j++){
-        v.push_back(Zeca(i,j,line.at(j)));
-      }
-      maxX = max(maxX,(int)line.length());   //je prends le max des largeurs
-      i++;
-      tab.push_back(v);
-      v.clear();
+  while(getline(f,line)){
+    for (unsigned int j = 0; j < line.length(); j++){
+      v.push_back(Zeca(i,j,line.at(j)));
     }
-    sizeY = i;   // on sauvegarde la taille du teaupla ca servira surement
-    sizeX = (unsigned int) maxX;
+    maxX = max(maxX,(int)line.length());   //je prends le max des largeurs
+    i++;
+    tab.push_back(v);
+    v.clear();
+    }
+  sizeY = i;   // on sauvegarde la taille du teaupla ca servira surement
+  sizeX = (unsigned int) maxX;
 
-    streumons = construitStreumons();
-    teupors = construitTeuports();
+  streumons = construitStreumons();
+  teupors = construitTeuports();
+
+  srand (time(NULL));
 }
 
 
@@ -129,18 +132,21 @@ bool Teaupla::verifieGeuchars(int x, int y){
 
 
 
-void Teaupla::teleportation(Oueurj J, int x, int y){
+void Teaupla::teleportation(Oueurj* J){
 
   int xrand;
   int yrand;
+  int x = J->getX();
+  int y = J->getY();
   do{
     xrand = rand()%(getMaxX());
     yrand = rand()%(getMaxY());
   } while(!posValide(xrand,yrand));
   tab[y][x].setEtat(' ');
-  J.setLocalisation(xrand,yrand);
+  J->setLocalisation(xrand,yrand);
   tab[yrand][xrand].setEtat('J'); //mise à jour de la place du oueurj
-    cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
+  J->removeTP();
+  cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
 }
 
 
@@ -161,27 +167,27 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     //deplacement au Nord
     if(mouv=='z' && posValide(x,y-1)){
         if (verifieGeuchars(x,y-1)){
-          teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+          J.setTP();  //on lui donne une TP
         }
         else{
             if (verifieDiams(x,y-1)){ //si le oueurj veut recuperer un diams
               J.incrementeDiams();
               ouvreTeuport();
             }
-            tab[y][x].setEtat(' ');
-            J.setLocalisation(x,y-1);
-            cout<<"Nouvelle localisation de J est : (" << x << ", " << y-1 << ")" << endl; //pour tester
-            tab[y-1][x].setEtat('J'); //mise à jour de la place du oueurj
-            cout<<"Vous vous etes deplaces au Nord"<<endl;
-        }
+          }
+        tab[y][x].setEtat(' ');
+        J.setLocalisation(x,y-1);
+        cout<<"Nouvelle localisation de J est : (" << x << ", " << y-1 << ")" << endl; //pour tester
+        tab[y-1][x].setEtat('J'); //mise à jour de la place du oueurj
+        cout<<"Vous vous etes deplaces au Nord"<<endl;
     }
 
-    
+
     //deplacement au Nord Est
     if(mouv=='e' && posValide(x+1,y-1)){
 
       if (verifieGeuchars(x+1,y-1)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
 
       else{
@@ -189,12 +195,12 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
           J.incrementeDiams();
           ouvreTeuport();
         }
-        tab[y][x].setEtat(' ');
-        J.setLocalisation(x+1,y-1);
-        cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y-1 << ")" << endl;
-        tab[y-1][x+1].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer au Nord Est"<<endl;
       }
+      tab[y][x].setEtat(' ');
+      J.setLocalisation(x+1,y-1);
+      cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y-1 << ")" << endl;
+      tab[y-1][x+1].setEtat('J'); //mise à jour de la place du oueurj
+      cout<<"Vous vous etes deplacer au Nord Est"<<endl;
     }
 
 
@@ -202,7 +208,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     if(mouv=='a' && posValide(x-1,y-1)){
 
       if (verifieGeuchars(x-1,y-1)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
 
       else{
@@ -210,19 +216,19 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
           J.incrementeDiams();
           ouvreTeuport();
         }
+      }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x-1,y-1);
         cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y-1 << ")" << endl;
         tab[y-1][x-1].setEtat('J'); //mise à jour de la place du oueurj
         cout<<"Vous vous etes deplacer au Nord Ouest"<<endl;
-      }
     }
 
     //deplacement a l'Est
     if(mouv=='d' && posValide(x+1,y)){
 
       if (verifieGeuchars(x+1,y)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
 
       else{
@@ -230,38 +236,38 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
           J.incrementeDiams();
           ouvreTeuport();
         }
+      }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x+1,y);
         cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y << ")" << endl;
         tab[y][x+1].setEtat('J'); //mise à jour de la place du oueurj
         cout<<"Vous vous etes deplacer a l'Est"<<endl;
-      }
     }
 
     //deplacement a l'Ouest
     if(mouv=='q' && posValide(x-1,y)){
 
       if (verifieGeuchars(x-1,y)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x-1,y)){
           J.incrementeDiams();
           ouvreTeuport();
         }
+      }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x-1,y);
         cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y << ")" << endl;
         tab[y][x-1].setEtat('J'); //mise à jour de la place du oueurj
         cout<<"Vous vous etes deplacer a l'Ouest"<<endl;
-      }
     }
 
     //deplacement au Sud
     if(mouv=='x' && posValide(x,y+1)){
 
       if (verifieGeuchars(x,y+1)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
 
       else{
@@ -269,52 +275,67 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
           J.incrementeDiams();
           ouvreTeuport();
         }
+      }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x,y+1);
         cout<<"Nouvelle localisation de J est : (" << x << ", " << y+1 << ")" << endl;
         tab[y+1][x].setEtat('J'); //mise à jour de la place du oueurj
         cout<<"Vous vous etes deplacer au Sud"<<endl;
-      }
     }
 
     //deplacement au Sud Est
     if(mouv=='c' && posValide(x+1,y+1)){
 
       if (verifieGeuchars(x+1,y+1)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x+1,y+1)){
         J.incrementeDiams();
         ouvreTeuport();
         }
+      }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x+1,y+1);
         cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y+1 << ")" << endl;
         tab[y+1][x+1].setEtat('J'); //mise à jour de la place du oueurj
         cout<<"Vous vous etes deplacer au Sud Est"<<endl;
-      }
     }
 
     //deplacement au Sud Ouest
     if(mouv=='w' && posValide(x-1,y+1)){
 
       if (verifieGeuchars(x-1,y+1)){
-        teleportation(J,x,y); //on teleporte le oueurj si il est sur *
+        J.setTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x-1,y+1)){
           J.incrementeDiams();
           ouvreTeuport();
         }
+      }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x-1,y+1);
         cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y+1 << ")" << endl;
         tab[y+1][x-1].setEtat('J'); //mise à jour de la place du oueurj
         cout<<"Vous vous etes deplacer au Sud Ouest"<<endl;
-      }
     }
 
+    //Teleportation
+    if(mouv=='s' && J.hasTP()){
+      if (verifieGeuchars(x-1,y+1)){
+        J.setTP();  //on lui donne une TP
+      }
+      else{
+        if (verifieDiams(x-1,y+1)){
+          J.incrementeDiams();
+          ouvreTeuport();
+        }
+      }
+        tab[y][x].setEtat(' ');
+        teleportation(&J); //on teleporte
+        cout << J.getX() << ' ' << J.getY() << endl;
+    }
 
     perdu = deplaceStreumons(J);
 
