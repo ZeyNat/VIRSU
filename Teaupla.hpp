@@ -27,7 +27,7 @@ class Teaupla {
     unsigned int getMaxY();  //on pourra les enlever
     void affiche();   //plus tard on fera de la surcharge d'operateur
 
-    Oueurj getOueurj();   //on cree le oueurj en le cherchant sur le teaupla
+    vector<int> getCoordOueurj();   //on cree le oueurj en le cherchant sur le teaupla
 
     vector<Streumon> getStreumons();    // renvoie la liste des streumons
 
@@ -41,7 +41,7 @@ class Teaupla {
        Ouest = 'q' / Est = 'd' / Sud = 'x' / SudEst = 'c' / Sud-Ouest = 'w'
        quitter = 0 */
 
-    void deplaceOueurj();
+    bool deplaceOueurj(Oueurj* Jold);
     bool deplaceStreumons(Oueurj J);   //deplace les streumons vers le joueur J
 
     bool verifieDiams(int x, int y); //verifie si la zeca est un diams

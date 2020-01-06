@@ -9,13 +9,14 @@ using namespace std;
 
 
 int main(int argc, char **argv){
+  srand (time(NULL));
   string nom = argv[1];
   nom += ".game";
   int nbTeauplas = (int) *argv[2] -48;
   ofstream flux (nom.c_str());
   string nomBoard;
   char num = '1';
-  for (int i = 1; i < nbTeauplas; i++){
+  for (int i = 1; i <= nbTeauplas; i++){
     nomBoard = "b";
     nomBoard += num;
     nomBoard += ".board";

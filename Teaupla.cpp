@@ -90,15 +90,15 @@ vector<Zeca> Teaupla::getTeuports() {return teupors;}
 
 
 
-Oueurj Teaupla::getOueurj(){
+vector<int> Teaupla::getCoordOueurj(){
   for (int i = 0;(unsigned int) i < sizeY; i++){
     for (int j = 0; (unsigned int) j < sizeX; j++){
       if(tab.at(i).at(j).getEtat() =='J'){
-        return Oueurj(j,i);
+        return {j,i};
       }
     }
   }
-  return Oueurj(0,0);     //il faudrait une exception mais on verra plus tard
+  return{}  ;   //il faudrait une exception mais on verra plus tard
 }
 
 
@@ -218,8 +218,9 @@ void Teaupla::teleportation(Oueurj* J){
 
 
 
-void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée clavier
-  Oueurj J = getOueurj();
+bool Teaupla::deplaceOueurj(Oueurj* Jold){ //deplacement du oueurj en fonction de l'entrée clavier
+  vector<int> coord = getCoordOueurj();
+  Oueurj J(*Jold, coord[0],coord[1]);
   bool perdu = false;
   char mouv;
   J.afficheDiams();
@@ -244,9 +245,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
           }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x,y-1);
-        cout<<"Nouvelle localisation de J est : (" << x << ", " << y-1 << ")" << endl; //pour tester
+        //cout<<"Nouvelle localisation de J est : (" << x << ", " << y-1 << ")" << endl; //pour tester
         tab[y-1][x].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplaces au Nord"<<endl;
+        //cout<<"Vous vous etes deplaces au Nord"<<endl;
     }
 
 
@@ -265,9 +266,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
       tab[y][x].setEtat(' ');
       J.setLocalisation(x+1,y-1);
-      cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y-1 << ")" << endl;
+      //cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y-1 << ")" << endl;
       tab[y-1][x+1].setEtat('J'); //mise à jour de la place du oueurj
-      cout<<"Vous vous etes deplacer au Nord Est"<<endl;
+      //cout<<"Vous vous etes deplacer au Nord Est"<<endl;
     }
 
 
@@ -286,9 +287,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x-1,y-1);
-        cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y-1 << ")" << endl;
+        //cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y-1 << ")" << endl;
         tab[y-1][x-1].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer au Nord Ouest"<<endl;
+        //cout<<"Vous vous etes deplacer au Nord Ouest"<<endl;
     }
 
     //deplacement a l'Est
@@ -306,9 +307,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x+1,y);
-        cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y << ")" << endl;
+        //cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y << ")" << endl;
         tab[y][x+1].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer a l'Est"<<endl;
+        //cout<<"Vous vous etes deplacer a l'Est"<<endl;
     }
 
     //deplacement a l'Ouest
@@ -325,9 +326,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x-1,y);
-        cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y << ")" << endl;
+        //cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y << ")" << endl;
         tab[y][x-1].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer a l'Ouest"<<endl;
+        //cout<<"Vous vous etes deplacer a l'Ouest"<<endl;
     }
 
     //deplacement au Sud
@@ -345,9 +346,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x,y+1);
-        cout<<"Nouvelle localisation de J est : (" << x << ", " << y+1 << ")" << endl;
+        //cout<<"Nouvelle localisation de J est : (" << x << ", " << y+1 << ")" << endl;
         tab[y+1][x].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer au Sud"<<endl;
+        //cout<<"Vous vous etes deplacer au Sud"<<endl;
     }
 
     //deplacement au Sud Est
@@ -364,9 +365,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x+1,y+1);
-        cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y+1 << ")" << endl;
+        //cout<<"Nouvelle localisation de J est : (" << x+1 << ", " << y+1 << ")" << endl;
         tab[y+1][x+1].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer au Sud Est"<<endl;
+        //cout<<"Vous vous etes deplacer au Sud Est"<<endl;
     }
 
     //deplacement au Sud Ouest
@@ -383,9 +384,9 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
       }
         tab[y][x].setEtat(' ');
         J.setLocalisation(x-1,y+1);
-        cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y+1 << ")" << endl;
+        //cout<<"Nouvelle localisation de J est : (" << x-1 << ", " << y+1 << ")" << endl;
         tab[y+1][x-1].setEtat('J'); //mise à jour de la place du oueurj
-        cout<<"Vous vous etes deplacer au Sud Ouest"<<endl;
+        //cout<<"Vous vous etes deplacer au Sud Ouest"<<endl;
     }
 
     //Teleportation
@@ -409,11 +410,12 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     affiche();
     cout << "Diams " << J.getDiams() << endl;
     cout << "Teleports : " << J.getTP() << endl;
-    afficheTeuport();
+    //afficheTeuport();
     if(gagner(J))  cout<<"BRAVOOOOOOOO !!!"<<endl;
-  } while(mouv!='0' && !perdu);
+  } while(mouv!='0' && !perdu && !gagner(J));
 
-  cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;
+  if (perdu) {cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;}
+  return gagner(J);
 }
 
 
@@ -448,7 +450,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //SE
     if (x < xJ && y < yJ && posValide(x+1,y+1) && !dep){
-      cout << "SE" << endl;
+      //cout << "SE" << endl;
       streumons.at(i).setLocalisation(x+1,y+1);
       streumons.at(i).setSousSesPieds(tab[y+1][x+1].getEtat());
       tab[y+1][x+1].setEtat('s');
@@ -457,7 +459,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //NE
     if (x < xJ && y > yJ && posValide(x+1,y-1) && !dep){
-      cout << "NE" << endl;
+      //cout << "NE" << endl;
       streumons.at(i).setLocalisation(x+1,y-1);
       streumons.at(i).setSousSesPieds(tab[y-1][x+1].getEtat());
       tab[y-1][x+1].setEtat('s');
@@ -466,7 +468,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //SO
     if(x > xJ && y < yJ && posValide(x-1,y+1) && !dep){
-      cout << "SO" << endl;
+      //cout << "SO" << endl;
       streumons.at(i).setLocalisation(x-1,y+1);
       streumons.at(i).setSousSesPieds(tab[y+1][x-1].getEtat());
       tab[y+1][x-1].setEtat('s');
@@ -475,7 +477,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //NO
     if(x > xJ && y > yJ && posValide(x-1,y-1) && !dep){
-      cout << "NO" << endl;
+      //cout << "NO" << endl;
       streumons.at(i).setLocalisation(x-1,y-1);
       streumons.at(i).setSousSesPieds(tab[y-1][x-1].getEtat());
       tab[y-1][x-1].setEtat('s');
@@ -484,7 +486,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //O
     if (x > xJ && posValide(x-1,y) && !dep){
-      cout << "O" << endl;
+      //cout << "O" << endl;
       streumons.at(i).setLocalisation(x-1,y);
       streumons.at(i).setSousSesPieds(tab[y][x-1].getEtat());
       tab[y][x-1].setEtat('s');
@@ -493,7 +495,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //E
     if (x < xJ && posValide(x+1,y) && !dep){
-      cout << "E" << endl;
+      //cout << "E" << endl;
       streumons.at(i).setLocalisation(x+1,y);
       streumons.at(i).setSousSesPieds(tab[y][x+1].getEtat());
       tab[y][x+1].setEtat('s');
@@ -502,7 +504,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //N
     if (y > yJ && posValide(x,y-1) && !dep){
-      cout << "N" << endl;
+      //cout << "N" << endl;
       streumons.at(i).setLocalisation(x,y-1);
       streumons.at(i).setSousSesPieds(tab[y-1][x].getEtat());
       tab[y-1][x].setEtat('s');
@@ -511,7 +513,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
     //S
     if(y < yJ && posValide(x,y+1) && !dep){
-      cout << "S" << endl;
+      //cout << "S" << endl;
       streumons.at(i).setLocalisation(x,y+1);
       streumons.at(i).setSousSesPieds(tab[y+1][x].getEtat());
       tab[y+1][x].setEtat('s');

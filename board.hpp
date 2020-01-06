@@ -102,7 +102,7 @@ bool posSure(vector<vector<char> > grille,unsigned int y, unsigned int x){
     && grille[y-1][x]!='s'
     && grille[y-1][x+1]!='s')
 
-    {
+    {/*
       if (x+2 < X){
         if(grille[y-1][x+2]=='s' && grille[y][x+2]=='s' && grille[y+1][x+2]=='s'){
           return false;
@@ -143,7 +143,7 @@ bool posSure(vector<vector<char> > grille,unsigned int y, unsigned int x){
         if(grille[y+2][x-1] =='s' || grille[y+2][x] == 's' || grille[y+2][x+1]=='s'){
           return false;
         }
-      }
+      }*/
 
   return true;
   }
@@ -178,7 +178,7 @@ void ecriture(vector<vector<char> > grille,ofstream &flux){
 
 
 void createBoard(string nom) {
-    srand (time(NULL));
+
 
     unsigned int X = rand()%(MAX_X_len-MIN_X_len) + MIN_X_len + 1;
     unsigned int Y = rand()%(MAX_Y_len-MIN_Y_len) + MIN_Y_len + 1;

@@ -8,7 +8,8 @@ class Oueurj : public _Deplacable{
     int nbDiams;
     unsigned int TP;
   public:
-    Oueurj(int x, int y, int d = 0);
+    Oueurj(int x=0, int y=0, int d = 0);
+    Oueurj(Oueurj j, int x, int y);
     void incrementeDiams();
     void decrementeDiams();
     int getDiams();
