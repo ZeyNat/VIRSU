@@ -409,12 +409,12 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     affiche();
     cout << "Diams " << J.getDiams() << endl;
     cout << "Teleports : " << J.getTP() << endl;
+    afficheTeuport();
+    if(gagner(J))  cout<<"BRAVOOOOOOOO !!!"<<endl;
   } while(mouv!='0' && !perdu);
 
   cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;
 }
-
-
 
 
 
@@ -522,6 +522,28 @@ bool Teaupla::deplaceStreumons(Oueurj J){
     }
 
     if(streumons.at(i).getX() == xJ && streumons.at(i).getY() == yJ){
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
+void Teaupla::afficheTeuport(){
+  cout<<"****************"<<endl;
+  cout<< "Teuport : " <<endl;
+  for (unsigned int z=0; z<teupors.size(); z++){
+    cout<<teupors[z].getEtat()<<endl;
+  }
+  cout<<"****************"<<endl;
+}
+
+
+
+bool Teaupla::gagner(Oueurj J){
+  for (unsigned int z=0; z<teupors.size(); z++){
+    if (teupors[z].getEtat()=='+' && teupors[z].getY()==J.getX() && teupors[z].getX()==J.getY()){
       return true;
     }
   }

@@ -21,7 +21,6 @@ class Teaupla {
     vector<Zeca> construitTeuports();
 
 
-
   public :
     Teaupla(string nomFichier);   // on construit avec un fichier texte
     unsigned int getMaxX();  //fcts tests
@@ -50,9 +49,15 @@ class Teaupla {
 
     void ouvreTeuport(); //une teuport s'ouvre lorsque Oueurj collecte un diams
 
+    void afficheTeuport();
+
     bool verifieGeuchars(int x, int y);
 
     void teleportation(Oueurj* J);
+
+    bool gagner(Oueurj J);
+
+
 };
 
 #endif
