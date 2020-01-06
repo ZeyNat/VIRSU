@@ -38,8 +38,8 @@ bool posValide(vector<vector<char> > grille,unsigned int x,unsigned int y){
 
 
 void constructionReumus(vector<vector<char> > & grille){
-  int X = grille.size();
-  int Y = grille[0].size();
+  unsigned int X = grille.size();
+  unsigned int Y = grille[0].size();
   for (unsigned int i = 0; i < X; i++){
     for (unsigned int j = 0; j < Y; j++){
       if (i == 0 or i == X-1 or j == 0 or j == Y-1){
@@ -75,8 +75,6 @@ void affiche(vector<vector<char> > grille){
 void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
   unsigned int xTeupor;
   unsigned int yTeupor;
-  unsigned int xDiams;
-  unsigned int yDiams;
   for (unsigned int i = 0; i < nbTeupors; i++){
     do{
       xTeupor = rand()%(grille.size());
@@ -88,7 +86,7 @@ void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
 }
 
 
-bool posSure(vector<vector<char> > tab,int y, int x){
+bool posSure(vector<vector<char> > tab,unsigned int y, unsigned int x){
   if (posValide(tab,y,x)
         && tab[y][x-1]!='s'
         && tab[y][x]!='s'
@@ -174,11 +172,15 @@ int main(int argc, char **argv) {
     vector<vector<char> > grille = constructionGrille(X,Y);
     cout << "construction OK" << endl;
     constructionReumus(grille);
+    cout << "reumus OK" << endl;
     ajoutTeupors(grille,nbTeupors);
+    cout << "teupors OK" << endl;
     ajoutTruc(grille,'$',nbTeupors);
     ajoutTruc(grille,'*',nbGeurchars);
     ajoutTruc(grille,'s',nbStreumon);
+    cout << "trucs OK" << endl;
     ajoutOueurj(grille);
+    cout << "Oueurj OK" << endl;
 
     affiche(grille);
 
