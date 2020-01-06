@@ -2,6 +2,7 @@
 #include <time.h>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
 using namespace std;
 
 const unsigned int MAX_X_len = 27;
@@ -18,9 +19,9 @@ const unsigned int maxGeurchars = 3;
 
 
 
-vector<vector<char>> constructionGrille(unsigned int X, unsigned int Y){
+vector<vector<char> > constructionGrille(unsigned int X, unsigned int Y){
   vector<char> ligne;
-  vector<vector<char>> res;
+  vector<vector<char> > res;
   for (unsigned int i = 0; i < Y; i++){
     for (unsigned int j = 0; j < X; j++){
       ligne.push_back(' ');
@@ -31,12 +32,12 @@ vector<vector<char>> constructionGrille(unsigned int X, unsigned int Y){
   return res;
 }
 
-bool posValide(vector<vector<char>> grille,unsigned int x,unsigned int y){
+bool posValide(vector<vector<char> > grille,unsigned int x,unsigned int y){
   return grille[x][y] == ' ';
 }
 
 
-void constructionReumus(vector<vector<char>> & grille){
+void constructionReumus(vector<vector<char> > & grille){
   int X = grille.size();
   int Y = grille[0].size();
   for (unsigned int i = 0; i < X; i++){
@@ -50,7 +51,7 @@ void constructionReumus(vector<vector<char>> & grille){
 
 
 
-void ajoutTruc(vector<vector<char>> &grille, char c, int nb){
+void ajoutTruc(vector<vector<char> > &grille, char c, int nb){
   unsigned int xTruc;
   unsigned int yTruc;
   for (int i = 0; i < nb; i++){
@@ -62,7 +63,7 @@ void ajoutTruc(vector<vector<char>> &grille, char c, int nb){
   }
 }
 
-void affiche(vector<vector<char>> grille){
+void affiche(vector<vector<char> > grille){
   for (unsigned int i = 0; i < grille.size(); i++){
     for (unsigned int j = 0; j < grille[0].size(); j++){
       cout << grille[i][j];
@@ -71,7 +72,7 @@ void affiche(vector<vector<char>> grille){
   }
 }
 
-void ajoutTeupors(vector<vector<char>> &grille, unsigned int nbTeupors){
+void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
   unsigned int xTeupor;
   unsigned int yTeupor;
   unsigned int xDiams;
@@ -87,7 +88,58 @@ void ajoutTeupors(vector<vector<char>> &grille, unsigned int nbTeupors){
 }
 
 
-void ecriture(vector<vector<char>> grille,ofstream &flux){
+bool posSure(vector<vector<char> > tab,int y, int x){
+  if (posValide(tab,y,x)
+        && tab[y][x-1]!='s'
+        && tab[y][x]!='s'
+        && tab[y][x+1]!='s'
+
+        && tab[y+1][x-1]!='s'
+        && tab[y+1][x]!='s'
+        && tab[y+1][x+1]!='s'
+
+        && tab[y-1][x-1]!='s'
+        && tab[y-1][x]!='s'
+        && tab[y-1][x+1]!='s'
+
+        && (x-2 >= 0 && tab[y][x-2]!='s')
+        && (x+2 < tab.size() && tab[y][x+2]!='s')
+        && (x-2 >= 0 && tab[y+1][x-2]!='s')
+        && (x+2 < tab.size() && tab[y+1][x+2]!='s')
+        && (x-2 >= 0 && tab[y-1][x-2]!='s')
+        && (x+2 < tab.size() && tab[y-1][x+2]!='s')
+        && (y-2 >= 0  && x-2 >= 0 && tab[y-2][x-2]!='s')
+        && (y-2 >= 0 && tab[y-2][x-1]!='s')
+        && (y-2 >= 0 && tab[y-2][x]!='s')
+        && (y-2 >= 0 && tab[y-2][x+1]!='s')
+        && (y-2 >= 0 && x+2 < tab.size() && tab[y-2][x+2]!='s')
+        && (y+2 < tab[0].size() && x-2 >= 0 && tab[y+2][x-2]!='s')
+        && (y+2 < tab[0].size() && tab[y+2][x-1]!='s')
+        && (y+2 < tab[0].size() && tab[y+2][x]!='s')
+        && (y+2 < tab[0].size() && tab[y+2][x+1]!='s')
+        && (y+2 < tab[0].size() && x+2 < tab.size() && tab[y+2][x+2]!='s'))
+
+        {
+    return true;
+  }
+  return false;
+}
+
+
+void ajoutOueurj(vector<vector<char> > &grille){
+  unsigned int xOueurj;
+  unsigned int yOueurj;
+  do {
+      xOueurj= rand()%grille.size();
+      yOueurj = rand()%grille[0].size();
+  } while (!posValide(grille,xOueurj,yOueurj));
+  grille[xOueurj][yOueurj] = 'J';
+
+}
+
+
+
+void ecriture(vector<vector<char> > grille,ofstream &flux){
   for (unsigned int i = 0; i < grille.size(); i++){
     for (unsigned int j = 0; j < grille[0].size(); j++){
       flux << grille[i][j];
@@ -99,7 +151,7 @@ void ecriture(vector<vector<char>> grille,ofstream &flux){
 
 
 
-int main() {
+int main(int argc, char **argv) {
     string nom = "b.board";
     srand (time(NULL));
 
@@ -119,13 +171,14 @@ int main() {
 
     cout << X << ' ' << Y << endl;
 
-    vector<vector<char>> grille = constructionGrille(X,Y);
+    vector<vector<char> > grille = constructionGrille(X,Y);
+    cout << "construction OK" << endl;
     constructionReumus(grille);
-    ajoutTruc(grille,'J',1);
     ajoutTeupors(grille,nbTeupors);
     ajoutTruc(grille,'$',nbTeupors);
     ajoutTruc(grille,'*',nbGeurchars);
     ajoutTruc(grille,'s',nbStreumon);
+    ajoutOueurj(grille);
 
     affiche(grille);
 

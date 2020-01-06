@@ -115,41 +115,43 @@ bool Teaupla::posValide(int x, int y){
 
 
 // pos non valide =  hors teaupla, reumu, teupor
-bool Teaupla::posSure(int x, int y){
+bool Teaupla::posSure(unsigned int x, unsigned int y){
   if (posValide(x,y)
-        && tab[y][x-2].getEtat()!='s'
         && tab[y][x-1].getEtat()!='s'
         && tab[y][x].getEtat()!='s'
         && tab[y][x+1].getEtat()!='s'
-        && tab[y][x+2].getEtat()!='s'
 
-        && tab[y+1][x-2].getEtat()!='s'
         && tab[y+1][x-1].getEtat()!='s'
         && tab[y+1][x].getEtat()!='s'
         && tab[y+1][x+1].getEtat()!='s'
-        && tab[y+1][x+2].getEtat()!='s'
 
-        && tab[y-1][x-2].getEtat()!='s'
         && tab[y-1][x-1].getEtat()!='s'
         && tab[y-1][x].getEtat()!='s'
         && tab[y-1][x+1].getEtat()!='s'
-        && tab[y-1][x+2].getEtat()!='s'
 
-        && tab[y-2][x-2].getEtat()!='s'
-        && tab[y-2][x-1].getEtat()!='s'
-        && tab[y-2][x].getEtat()!='s'
-        && tab[y-2][x+1].getEtat()!='s'
-        && tab[y-2][x+2].getEtat()!='s'
+        && (x-2 >= 0 && tab[y][x-2].getEtat()!='s')
+        && (x+2 < tab.size() && tab[y][x+2].getEtat()!='s')
+        && (x-2 >= 0 && tab[y+1][x-2].getEtat()!='s')
+        && (x+2 < tab.size() && tab[y+1][x+2].getEtat()!='s')
+        && (x-2 >= 0 && tab[y-1][x-2].getEtat()!='s')
+        && (x+2 < tab.size() && tab[y-1][x+2].getEtat()!='s')
+        && (y-2 >= 0  && x-2 >= 0 && tab[y-2][x-2].getEtat()!='s')
+        && (y-2 >= 0 && tab[y-2][x-1].getEtat()!='s')
+        && (y-2 >= 0 && tab[y-2][x].getEtat()!='s')
+        && (y-2 >= 0 && tab[y-2][x+1].getEtat()!='s')
+        && (y-2 >= 0 && x+2 < tab.size() && tab[y-2][x+2].getEtat()!='s')
+        && (y+2 < tab[0].size() && x-2 >= 0 && tab[y+2][x-2].getEtat()!='s')
+        && (y+2 < tab[0].size() && tab[y+2][x-1].getEtat()!='s')
+        && (y+2 < tab[0].size() && tab[y+2][x].getEtat()!='s')
+        && (y+2 < tab[0].size() && tab[y+2][x+1].getEtat()!='s')
+        && (y+2 < tab[0].size() && x+2 < tab.size() && tab[y+2][x+2].getEtat()!='s'))
 
-        && tab[y+2][x-2].getEtat()!='s'
-        && tab[y+2][x-1].getEtat()!='s'
-        && tab[y+2][x].getEtat()!='s'
-        && tab[y+2][x+1].getEtat()!='s'
-        && tab[y+2][x+2].getEtat()!='s'){
+        {
     return true;
   }
   return false;
 }
+
 
 
 
