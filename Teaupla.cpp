@@ -116,11 +116,36 @@ bool Teaupla::posValide(int x, int y){
 
 // pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posSure(int x, int y){
-  if (posValide(x,y) && tab[y][x].getEtat()!='s' && tab[y-1][x].getEtat()!='s'
-        && tab[y+1][x].getEtat()!='s' && tab[y][x-1].getEtat()!='s'
-        && tab[y][x+1].getEtat()!='s'&& tab[y-1][x-1].getEtat()!='s'
-        && tab[y-1][x+1].getEtat()!='s' && tab[y+1][x-1].getEtat()!='s'
-        && tab[y+1][x+1].getEtat()!='s'){
+  if (posValide(x,y)
+        && tab[y][x-2].getEtat()!='s'
+        && tab[y][x-1].getEtat()!='s'
+        && tab[y][x].getEtat()!='s'
+        && tab[y][x+1].getEtat()!='s'
+        && tab[y][x+2].getEtat()!='s'
+
+        && tab[y+1][x-2].getEtat()!='s'
+        && tab[y+1][x-1].getEtat()!='s'
+        && tab[y+1][x].getEtat()!='s'
+        && tab[y+1][x+1].getEtat()!='s'
+        && tab[y+1][x+2].getEtat()!='s'
+
+        && tab[y-1][x-2].getEtat()!='s'
+        && tab[y-1][x-1].getEtat()!='s'
+        && tab[y-1][x].getEtat()!='s'
+        && tab[y-1][x+1].getEtat()!='s'
+        && tab[y-1][x+2].getEtat()!='s'
+
+        && tab[y-2][x-2].getEtat()!='s'
+        && tab[y-2][x-1].getEtat()!='s'
+        && tab[y-2][x].getEtat()!='s'
+        && tab[y-2][x+1].getEtat()!='s'
+        && tab[y-2][x+2].getEtat()!='s'
+
+        && tab[y+2][x-2].getEtat()!='s'
+        && tab[y+2][x-1].getEtat()!='s'
+        && tab[y+2][x].getEtat()!='s'
+        && tab[y+2][x+1].getEtat()!='s'
+        && tab[y+2][x+2].getEtat()!='s'){
     return true;
   }
   return false;
