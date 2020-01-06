@@ -8,10 +8,28 @@ using namespace std;
 
 
 int main() {
-  string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/b.board";  //pour moi haha
-  //string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/b.board";  //pour toi hihi ;)
+  //string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/b.board";  //pour moi haha
+  string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/b.board";  //pour toi hihi ;)
   Teaupla T(teau);
   T.affiche();
+
+/*  assert(T.posSure(1,1));
+  cout << "ok 1 1" << endl;
+  assert(T.posSure(24,11));
+  cout << "ok 8 10" << endl;
+  assert(T.posSure(1,11));
+  cout << "ok 1 10" << endl;
+  assert(T.posSure(24,1));
+  cout << "ok 8 1" << endl;
+  assert(T.posSure(1,3));
+
+  assert(T.posSure(24,5));
+
+  assert(T.posSure(5,1));
+
+  assert(T.posSure(5,11));
+  */
+  
   /*
   //tests dimensions
   assert(T.getMaxX()==18);

@@ -86,42 +86,70 @@ void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
 }
 
 
-bool posSure(vector<vector<char> > tab,unsigned int y, unsigned int x){
-  if (posValide(tab,y,x)
-        && tab[y][x-1]!='s'
-        && tab[y][x]!='s'
-        && tab[y][x+1]!='s'
+bool posSure(vector<vector<char> > grille,unsigned int y, unsigned int x){
+  unsigned int X = grille.size();
+  unsigned int Y = grille[0].size();
+  if (posValide(grille,x,y)
+    && grille[y][x-1]!='s'
+    && grille[y][x]!='s'
+    && grille[y][x+1]!='s'
 
-        && tab[y+1][x-1]!='s'
-        && tab[y+1][x]!='s'
-        && tab[y+1][x+1]!='s'
+    && grille[y+1][x-1]!='s'
+    && grille[y+1][x]!='s'
+    && grille[y+1][x+1]!='s'
 
-        && tab[y-1][x-1]!='s'
-        && tab[y-1][x]!='s'
-        && tab[y-1][x+1]!='s'
+    && grille[y-1][x-1]!='s'
+    && grille[y-1][x]!='s'
+    && grille[y-1][x+1]!='s')
 
-        && (x-2 >= 0 && tab[y][x-2]!='s')
-        && (x+2 < tab.size() && tab[y][x+2]!='s')
-        && (x-2 >= 0 && tab[y+1][x-2]!='s')
-        && (x+2 < tab.size() && tab[y+1][x+2]!='s')
-        && (x-2 >= 0 && tab[y-1][x-2]!='s')
-        && (x+2 < tab.size() && tab[y-1][x+2]!='s')
-        && (y-2 >= 0  && x-2 >= 0 && tab[y-2][x-2]!='s')
-        && (y-2 >= 0 && tab[y-2][x-1]!='s')
-        && (y-2 >= 0 && tab[y-2][x]!='s')
-        && (y-2 >= 0 && tab[y-2][x+1]!='s')
-        && (y-2 >= 0 && x+2 < tab.size() && tab[y-2][x+2]!='s')
-        && (y+2 < tab[0].size() && x-2 >= 0 && tab[y+2][x-2]!='s')
-        && (y+2 < tab[0].size() && tab[y+2][x-1]!='s')
-        && (y+2 < tab[0].size() && tab[y+2][x]!='s')
-        && (y+2 < tab[0].size() && tab[y+2][x+1]!='s')
-        && (y+2 < tab[0].size() && x+2 < tab.size() && tab[y+2][x+2]!='s'))
+    {
+      if (x+2 < X){
+        if(grille[y-1][x+2]=='s' && grille[y][x+2]=='s' && grille[y+1][x+2]=='s'){
+          return false;
 
-        {
-    return true;
+        }
+        if (y >= 2){
+          if(grille[y-2][x+2] == 's'){
+            return false;
+          }
+        }
+        if (y+2 < Y){
+          if(grille[y+2][x+2]=='s'){
+            return false;
+          }
+        }
+      }
+      if (x >= 2){
+        if(grille[y-1][x-2]=='s' || grille[y][x+2]=='s' || grille[y+1][x+2]=='s'){
+          return false;
+        }
+        if (y >= 2){
+          if(grille[y-2][x-2] == 's'){
+            return false;
+          }
+        }
+        if (y+2 < Y){
+          if(grille[y+2][x-2]=='s'){
+            return false;
+          }
+        }
+      }
+      if (y >= 2){
+        if(grille[y-2][x-1] =='s' || grille[y-2][x] == 's' || grille[y-2][x+1]=='s'){
+          return false;
+        }
+      }
+      if (y+2 < Y){
+        if(grille[y+2][x-1] =='s' || grille[y+2][x] == 's' || grille[y+2][x+1]=='s'){
+          return false;
+        }
+      }
+
+  return true;
   }
-  return false;
+return false;
 }
+
 
 
 void ajoutOueurj(vector<vector<char> > &grille){

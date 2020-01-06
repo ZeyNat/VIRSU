@@ -116,6 +116,8 @@ bool Teaupla::posValide(int x, int y){
 
 // pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posSure(unsigned int x, unsigned int y){
+  unsigned int X = getMaxX();
+  unsigned int Y = getMaxY();
   if (posValide(x,y)
         && tab[y][x-1].getEtat()!='s'
         && tab[y][x].getEtat()!='s'
@@ -127,26 +129,52 @@ bool Teaupla::posSure(unsigned int x, unsigned int y){
 
         && tab[y-1][x-1].getEtat()!='s'
         && tab[y-1][x].getEtat()!='s'
-        && tab[y-1][x+1].getEtat()!='s'
-
-        && (x-2 >= 0 && tab[y][x-2].getEtat()!='s')
-        && (x+2 < tab.size() && tab[y][x+2].getEtat()!='s')
-        && (x-2 >= 0 && tab[y+1][x-2].getEtat()!='s')
-        && (x+2 < tab.size() && tab[y+1][x+2].getEtat()!='s')
-        && (x-2 >= 0 && tab[y-1][x-2].getEtat()!='s')
-        && (x+2 < tab.size() && tab[y-1][x+2].getEtat()!='s')
-        && (y-2 >= 0  && x-2 >= 0 && tab[y-2][x-2].getEtat()!='s')
-        && (y-2 >= 0 && tab[y-2][x-1].getEtat()!='s')
-        && (y-2 >= 0 && tab[y-2][x].getEtat()!='s')
-        && (y-2 >= 0 && tab[y-2][x+1].getEtat()!='s')
-        && (y-2 >= 0 && x+2 < tab.size() && tab[y-2][x+2].getEtat()!='s')
-        && (y+2 < tab[0].size() && x-2 >= 0 && tab[y+2][x-2].getEtat()!='s')
-        && (y+2 < tab[0].size() && tab[y+2][x-1].getEtat()!='s')
-        && (y+2 < tab[0].size() && tab[y+2][x].getEtat()!='s')
-        && (y+2 < tab[0].size() && tab[y+2][x+1].getEtat()!='s')
-        && (y+2 < tab[0].size() && x+2 < tab.size() && tab[y+2][x+2].getEtat()!='s'))
+        && tab[y-1][x+1].getEtat()!='s')
 
         {
+          if (x+2 < X){
+            if(tab[y-1][x+2].getEtat()=='s' && tab[y][x+2].getEtat()=='s' && tab[y+1][x+2].getEtat()=='s'){
+              return false;
+
+            }
+            if (y >= 2){
+              if(tab[y-2][x+2].getEtat() == 's'){
+                return false;
+              }
+            }
+            if (y+2 < Y){
+              if(tab[y+2][x+2].getEtat()=='s'){
+                return false;
+              }
+            }
+          }
+          if (x >= 2){
+            if(tab[y-1][x-2].getEtat()=='s' || tab[y][x+2].getEtat()=='s' || tab[y+1][x+2].getEtat()=='s'){
+              return false;
+            }
+            if (y >= 2){
+              if(tab[y-2][x-2].getEtat() == 's'){
+                return false;
+              }
+            }
+            if (y+2 < Y){
+              if(tab[y+2][x-2].getEtat()=='s'){
+                return false;
+              }
+            }
+          }
+          if (y >= 2){
+            cout << y << endl;
+            if(tab[y-2][x-1].getEtat() =='s' || tab[y-2][x].getEtat() == 's' || tab[y-2][x+1].getEtat()=='s'){
+              return false;
+            }
+          }
+          if (y+2 < Y){
+            if(tab[y+2][x-1].getEtat() =='s' || tab[y+2][x].getEtat() == 's' || tab[y+2][x+1].getEtat()=='s'){
+              return false;
+            }
+          }
+
     return true;
   }
   return false;
@@ -382,6 +410,7 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     cout << "Diams " << J.getDiams() << endl;
     cout << "Teleports : " << J.getTP() << endl;
   } while(mouv!='0' && !perdu);
+
   cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;
 }
 
