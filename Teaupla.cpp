@@ -107,7 +107,7 @@ Oueurj Teaupla::getOueurj(){
 // pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posValide(int x, int y){
   if ((unsigned int) x < sizeX && (unsigned int) y < sizeY &&
-      tab[y][x].getEtat()!='X' && tab[y][x].getEtat()!='-'){
+      tab[y][x].getEtat()!='X' && tab[y][x].getEtat()!='-' && tab[y][x].getEtat()!='s'){
     return true;
   }
   return false;
@@ -117,9 +117,10 @@ bool Teaupla::posValide(int x, int y){
 // pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posSure(int x, int y){
   if (posValide(x,y) && tab[y][x].getEtat()!='s' && tab[y-1][x].getEtat()!='s'
-        && tab[y+1][x].getEtat()!='s' && tab[y][x-1].getEtat()!='s' 
-        && tab[y][x+1].getEtat()!='s' && tab[y-1][x-1].getEtat()!='s' 
-        && tab[y-1][x+1].getEtat()!='s' && tab[y+1][x-1].getEtat()!='s' && tab[y+1][x+1].getEtat()!='s'){
+        && tab[y+1][x].getEtat()!='s' && tab[y][x-1].getEtat()!='s'
+        && tab[y][x+1].getEtat()!='s'&& tab[y-1][x-1].getEtat()!='s'
+        && tab[y-1][x+1].getEtat()!='s' && tab[y+1][x-1].getEtat()!='s'
+        && tab[y+1][x+1].getEtat()!='s'){
     return true;
   }
   return false;
@@ -351,7 +352,8 @@ void Teaupla::deplaceOueurj(){ //deplacement du oueurj en fonction de l'entrée 
     perdu = deplaceStreumons(J);
 
     affiche();
-    cout << "Vous avez " << J.getDiams() << " diams." << endl;
+    cout << "Diams " << J.getDiams() << endl;
+    cout << "Teleports : " << J.getTP() << endl;
   } while(mouv!='0' && !perdu);
   cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;
 }

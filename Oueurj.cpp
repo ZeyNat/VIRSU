@@ -27,7 +27,7 @@ bool Oueurj::hasTP(){
 }
 
 void Oueurj::setTP(){
-  TP ++;
+  TP+=2;
 }
 
 void Oueurj::removeTP(){
