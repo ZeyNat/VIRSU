@@ -114,6 +114,18 @@ bool Teaupla::posValide(int x, int y){
 }
 
 
+// pos non valide =  hors teaupla, reumu, teupor
+bool Teaupla::posSure(int x, int y){
+  if (posValide(x,y) && tab[y][x].getEtat()!='s' && tab[y-1][x].getEtat()!='s'
+        && tab[y+1][x].getEtat()!='s' && tab[y][x].getEtat()!='s'
+        && tab[y][x-1].getEtat()!='s' && tab[y][x+1].getEtat()!='s'
+        && tab[y-1][x-1].getEtat()!='s' && tab[y-1][x+1].getEtat()!='s'
+        && tab[y+1][x-1].getEtat()!='s' && tab[y+1][x+1].getEtat()!='s'){
+    return true;
+  }
+  return false;
+}
+
 
 
 bool Teaupla::verifieDiams(int x, int y){
@@ -141,7 +153,7 @@ void Teaupla::teleportation(Oueurj* J){
   do{
     xrand = rand()%(getMaxX());
     yrand = rand()%(getMaxY());
-  } while(!posValide(xrand,yrand));
+  } while(!posSure(xrand,yrand));
   tab[y][x].setEtat(' ');
   J->setLocalisation(xrand,yrand);
   tab[yrand][xrand].setEtat('J'); //mise à jour de la place du oueurj
