@@ -41,7 +41,7 @@ class Teaupla {
        Ouest = 'q' / Est = 'd' / Sud = 'x' / SudEst = 'c' / Sud-Ouest = 'w'
        quitter = 0 */
 
-    bool deplaceOueurj(Oueurj* Jold);
+    bool deplaceOueurj(Oueurj& Jold);
     bool deplaceStreumons(Oueurj J);   //deplace les streumons vers le joueur J
 
     bool verifieDiams(int x, int y); //verifie si la zeca est un diams

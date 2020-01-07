@@ -86,68 +86,69 @@ void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
 }
 
 
-bool posSure(vector<vector<char> > grille,unsigned int y, unsigned int x){
+// pos sure : pas de streumon juste a cote
+bool posSure(vector<vector<char> > grille, unsigned int x, unsigned int y){
   unsigned int X = grille.size();
   unsigned int Y = grille[0].size();
   if (posValide(grille,x,y)
-    && grille[y][x-1]!='s'
-    && grille[y][x]!='s'
-    && grille[y][x+1]!='s'
+        && grille[x][y-1]!='s'
+        && grille[x][y]!='s'
+        && grille[x][y+1]!='s'
 
-    && grille[y+1][x-1]!='s'
-    && grille[y+1][x]!='s'
-    && grille[y+1][x+1]!='s'
+        && grille[x+1][y-1]!='s'
+        && grille[x+1][y]!='s'
+        && grille[x+1][y+1]!='s'
 
-    && grille[y-1][x-1]!='s'
-    && grille[y-1][x]!='s'
-    && grille[y-1][x+1]!='s')
+        && grille[x-1][y-1]!='s'
+        && grille[x-1][y]!='s'
+        && grille[x-1][y+1]!='s')
 
-    {/*
-      if (x+2 < X){
-        if(grille[y-1][x+2]=='s' && grille[y][x+2]=='s' && grille[y+1][x+2]=='s'){
-          return false;
+        {
+          if (y+2 < Y){
+            if(grille[x-1][y+2]=='s' && grille[x][y+2]=='s' && grille[x+1][y+2]=='s'){
+              return false;
 
-        }
-        if (y >= 2){
-          if(grille[y-2][x+2] == 's'){
-            return false;
+            }
+            if (x >= 2){
+              if(grille[x-2][y+2] == 's'){
+                return false;
+              }
+            }
+            if (x+2 < X){
+              if(grille[x+2][y+2]=='s'){
+                return false;
+              }
+            }
           }
-        }
-        if (y+2 < Y){
-          if(grille[y+2][x+2]=='s'){
-            return false;
+          if (y >= 2){
+            if(grille[x-1][y-2]=='s' || grille[x][y+2]=='s' || grille[x+1][y+2]=='s'){
+              return false;
+            }
+            if (x >= 2){
+              if(grille[x-2][y-2] == 's'){
+                return false;
+              }
+            }
+            if (x+2 < X){
+              if(grille[x+2][y-2]=='s'){
+                return false;
+              }
+            }
           }
-        }
-      }
-      if (x >= 2){
-        if(grille[y-1][x-2]=='s' || grille[y][x+2]=='s' || grille[y+1][x+2]=='s'){
-          return false;
-        }
-        if (y >= 2){
-          if(grille[y-2][x-2] == 's'){
-            return false;
+          if (x >= 2){
+            if(grille[x-2][y-1] =='s' || grille[x-2][y] == 's' || grille[x-2][y+1]=='s'){
+              return false;
+            }
           }
-        }
-        if (y+2 < Y){
-          if(grille[y+2][x-2]=='s'){
-            return false;
+          if (x+2 < X){
+            if(grille[x+2][y-1] =='s' || grille[x+2][y] == 's' || grille[x+2][y+1]=='s'){
+              return false;
+            }
           }
-        }
-      }
-      if (y >= 2){
-        if(grille[y-2][x-1] =='s' || grille[y-2][x] == 's' || grille[y-2][x+1]=='s'){
-          return false;
-        }
-      }
-      if (y+2 < Y){
-        if(grille[y+2][x-1] =='s' || grille[y+2][x] == 's' || grille[y+2][x+1]=='s'){
-          return false;
-        }
-      }*/
 
-  return true;
+    return true;
   }
-return false;
+  return false;
 }
 
 
@@ -158,7 +159,7 @@ void ajoutOueurj(vector<vector<char> > &grille){
   do {
       xOueurj= rand()%grille.size();
       yOueurj = rand()%grille[0].size();
-  } while (!posValide(grille,xOueurj,yOueurj));
+  } while (!posValide(grille,xOueurj,yOueurj) || !posSure(grille,xOueurj,yOueurj));
   grille[xOueurj][yOueurj] = 'J';
 
 }

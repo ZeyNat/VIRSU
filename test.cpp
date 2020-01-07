@@ -9,6 +9,13 @@ using namespace std;
 
 
 int main(int argc, char **argv) {
+
+  if(argc < 2) {
+    cout << "Veuillez donner un fichier game" << endl;
+    return 0;
+  }
+
+
   //string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/b.board";  //pour moi haha
   string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/";  //pour toi hihi ;)
   string game = teau + argv[1] + ".game";
@@ -24,7 +31,7 @@ int main(int argc, char **argv) {
     Teaupla T(teau+line);
     cout << " Niveau : " << lvl << endl;
     T.affiche();
-    encore = T.deplaceOueurj(&J);
+    encore = T.deplaceOueurj(J);
     lvl++;
 }
 

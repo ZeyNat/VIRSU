@@ -114,7 +114,7 @@ bool Teaupla::posValide(int x, int y){
 }
 
 
-// pos non valide =  hors teaupla, reumu, teupor
+// pos sure : pas de streumon juste a cote
 bool Teaupla::posSure(unsigned int x, unsigned int y){
   unsigned int X = getMaxX();
   unsigned int Y = getMaxY();
@@ -214,16 +214,27 @@ void Teaupla::teleportation(Oueurj* J){
   tab[yrand][xrand].setEtat('J'); //mise à jour de la place du oueurj
   J->removeTP();
   cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
+
+  if (verifieGeuchars(xrand,yrand)){
+    J.setTP();  //on lui donne une TP
+  }
+  else{
+      if (verifieDiams(xrand,yrand)){ //si le oueurj veut recuperer un diams
+        J.incrementeDiams();
+        ouvreTeuport();
+      }
+    }
 }
 
 
 
-bool Teaupla::deplaceOueurj(Oueurj* Jold){ //deplacement du oueurj en fonction de l'entrée clavier
+bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l'entrée clavier
   vector<int> coord = getCoordOueurj();
-  Oueurj J(*Jold, coord[0],coord[1]);
+  J.setLocalisation(coord[0],coord[1]);
   bool perdu = false;
   char mouv;
   J.afficheDiams();
+  cout << "Teleports : " << J.getTP() << endl;
 
 
   do{ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
@@ -339,7 +350,7 @@ bool Teaupla::deplaceOueurj(Oueurj* Jold){ //deplacement du oueurj en fonction d
       }
 
       else{
-        if (verifieDiams(x,y-1)){
+        if (verifieDiams(x,y+1)){
           J.incrementeDiams();
           ouvreTeuport();
         }
@@ -402,16 +413,17 @@ bool Teaupla::deplaceOueurj(Oueurj* Jold){ //deplacement du oueurj en fonction d
       }
         tab[y][x].setEtat(' ');
         teleportation(&J); //on teleporte
-        cout << J.getX() << ' ' << J.getY() << endl;
     }
 
     perdu = deplaceStreumons(J);
 
     affiche();
-    cout << "Diams " << J.getDiams() << endl;
+    J.afficheDiams();
     cout << "Teleports : " << J.getTP() << endl;
     //afficheTeuport();
-    if(gagner(J))  cout<<"BRAVOOOOOOOO !!!"<<endl;
+    if(gagner(J)){
+      cout<<"BRAVOOOOOOOO !!!"<<endl;
+    }
   } while(mouv!='0' && !perdu && !gagner(J));
 
   if (perdu) {cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;}
@@ -446,7 +458,6 @@ bool Teaupla::deplaceStreumons(Oueurj J){
     x = streumons.at(i).getX();
     y = streumons.at(i).getY();
     tab[y][x].setEtat(streumons.at(i).getSousSesPieds());
-    cout << x << ',' << y << endl;
 
     //SE
     if (x < xJ && y < yJ && posValide(x+1,y+1) && !dep){
