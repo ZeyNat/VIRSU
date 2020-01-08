@@ -3,7 +3,7 @@
 #ifndef DEPLACABLE
 #define DEPLACABLE
 
-class Deplacable{
+class Deplacable{ //Interface commune aux classes Oueurj et Streumon
   public :
     virtual int getX() = 0;
     virtual int getY() = 0;

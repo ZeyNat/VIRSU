@@ -25,6 +25,4 @@ int main(int argc, char **argv){
     createBoard(nomBoard);
     flux << nomBoard << endl;
   }
-
-
 }

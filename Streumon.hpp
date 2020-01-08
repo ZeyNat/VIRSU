@@ -17,5 +17,4 @@ class Streumon : public _Deplacable {
 };
 
 
-
 #endif

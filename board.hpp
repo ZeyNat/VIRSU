@@ -50,7 +50,7 @@ void constructionReumus(vector<vector<char> > & grille){
 }
 
 
-
+//Pour ajouter les diams, les teleports et les streumons
 void ajoutTruc(vector<vector<char> > &grille, char c, int nb){
   unsigned int xTruc;
   unsigned int yTruc;
@@ -179,7 +179,6 @@ void ecriture(vector<vector<char> > grille,ofstream &flux){
 
 
 void createBoard(string nom) {
-
 
     unsigned int X = rand()%(MAX_X_len-MIN_X_len) + MIN_X_len + 1;
     unsigned int Y = rand()%(MAX_Y_len-MIN_Y_len) + MIN_Y_len + 1;

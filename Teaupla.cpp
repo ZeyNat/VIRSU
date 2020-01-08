@@ -15,17 +15,17 @@ Teaupla::Teaupla(string nomFichier) : teuporsOuvertes{0} {
   unsigned int i = 0;
   int maxX = 0;
   vector<Zeca> v;
-    //lecture fichier et init des Zecas
+  //lecture fichier et init des Zecas
   while(getline(f,line)){
     for (unsigned int j = 0; j < line.length(); j++){
       v.push_back(Zeca(i,j,line.at(j)));
     }
-    maxX = max(maxX,(int)line.length());   //je prends le max des largeurs
+    maxX = max(maxX,(int)line.length());  //max des largeurs
     i++;
     tab.push_back(v);
     v.clear();
     }
-  sizeY = i;   // on sauvegarde la taille du teaupla ca servira surement
+  sizeY = i;   //sauvegarde taille du teaupla
   sizeX = (unsigned int) maxX;
 
   streumons = construitStreumons();
@@ -98,13 +98,13 @@ vector<int> Teaupla::getCoordOueurj(){
       }
     }
   }
-  return{}  ;   //il faudrait une exception mais on verra plus tard
+  return{};
 }
 
 
 
 
-// pos non valide =  hors teaupla, reumu, teupor
+//pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posValide(int x, int y){
   if ((unsigned int) x < sizeX && (unsigned int) y < sizeY &&
       tab[y][x].getEtat()!='X' && tab[y][x].getEtat()!='-' && tab[y][x].getEtat()!='s'){
@@ -191,7 +191,6 @@ bool Teaupla::verifieDiams(int x, int y){
 
 
 
-
 bool Teaupla::verifieGeuchars(int x, int y){
   return (tab[y][x].getEtat()=='*');
 }
@@ -200,7 +199,6 @@ bool Teaupla::verifieGeuchars(int x, int y){
 
 
 void Teaupla::teleportation(Oueurj* J){
-
   int xrand;
   int yrand;
   int x = J->getX();
@@ -216,11 +214,11 @@ void Teaupla::teleportation(Oueurj* J){
   cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
 
   if (verifieGeuchars(xrand,yrand)){
-    J.setTP();  //on lui donne une TP
+    J->setTP();  //on lui donne une TP
   }
   else{
       if (verifieDiams(xrand,yrand)){ //si le oueurj veut recuperer un diams
-        J.incrementeDiams();
+        J->incrementeDiams();
         ouvreTeuport();
       }
     }
@@ -236,12 +234,12 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
   J.afficheDiams();
   cout << "Teleports : " << J.getTP() << endl;
 
-
   do{ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
     cout<<"Jouer"<<endl;
     cin>>mouv;
     int x = J.getX();
     int y = J.getY();
+
 
     //deplacement au Nord
     if(mouv=='z' && posValide(x,y-1)){
@@ -303,6 +301,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         //cout<<"Vous vous etes deplacer au Nord Ouest"<<endl;
     }
 
+
     //deplacement a l'Est
     if(mouv=='d' && posValide(x+1,y)){
 
@@ -323,6 +322,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         //cout<<"Vous vous etes deplacer a l'Est"<<endl;
     }
 
+
     //deplacement a l'Ouest
     if(mouv=='q' && posValide(x-1,y)){
 
@@ -341,6 +341,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         tab[y][x-1].setEtat('J'); //mise à jour de la place du oueurj
         //cout<<"Vous vous etes deplacer a l'Ouest"<<endl;
     }
+
 
     //deplacement au Sud
     if(mouv=='x' && posValide(x,y+1)){
@@ -362,6 +363,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         //cout<<"Vous vous etes deplacer au Sud"<<endl;
     }
 
+
     //deplacement au Sud Est
     if(mouv=='c' && posValide(x+1,y+1)){
 
@@ -381,6 +383,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         //cout<<"Vous vous etes deplacer au Sud Est"<<endl;
     }
 
+
     //deplacement au Sud Ouest
     if(mouv=='w' && posValide(x-1,y+1)){
 
@@ -399,6 +402,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         tab[y+1][x-1].setEtat('J'); //mise à jour de la place du oueurj
         //cout<<"Vous vous etes deplacer au Sud Ouest"<<endl;
     }
+
 
     //Teleportation
     if(mouv=='s' && J.hasTP()){
@@ -432,6 +436,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
 
 
 
+
 //ouvre une porte aleatoirement
 void Teaupla::ouvreTeuport(){
     if(teupors.size() == teuporsOuvertes)  {return;}
@@ -444,6 +449,7 @@ void Teaupla::ouvreTeuport(){
     tab[teupors.at(i).getX()][teupors.at(i).getY()].setEtat('+');
     teuporsOuvertes++;
 }
+
 
 
 //return true si un streumon a foubé le oueurj.
@@ -543,6 +549,7 @@ bool Teaupla::deplaceStreumons(Oueurj J){
 
 
 
+
 void Teaupla::afficheTeuport(){
   cout<<"****************"<<endl;
   cout<< "Teuport : " <<endl;
@@ -551,6 +558,7 @@ void Teaupla::afficheTeuport(){
   }
   cout<<"****************"<<endl;
 }
+
 
 
 

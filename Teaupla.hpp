@@ -13,7 +13,7 @@ class Teaupla {
   private :
     unsigned int sizeX;
     unsigned int sizeY;
-    vector<vector<Zeca> > tab;   //plateau des zecas. Attention il est a lenvers. cest tab[col][lig]
+    vector<vector<Zeca>> tab;   //plateau des zecas. Attention il est a lenvers. cest tab[col][lig]
     vector<Streumon> streumons;
     vector<Streumon> construitStreumons();  //fct consstruction pour alleger constructeur
     vector<Zeca> teupors;

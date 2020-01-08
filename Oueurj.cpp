@@ -6,11 +6,9 @@ Oueurj::Oueurj(int x, int y,int d): _Deplacable(x,y), nbDiams{d}, TP{1} {}
 
 Oueurj::Oueurj(Oueurj J, int x, int y) : _Deplacable(x,y), nbDiams{J.getDiams()}, TP{J.getTP()} {}
 
-
 void Oueurj::incrementeDiams(){
   nbDiams++;
 }
-
 
 void Oueurj::decrementeDiams(){
   nbDiams--;

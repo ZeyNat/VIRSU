@@ -1,10 +1,6 @@
 #ifndef ZECA
 #define ZECA
-//#include "Teaupla.hpp"
 
-class Oueurj;
-class Streumons;
-class Teupors;
 
 class Zeca{
   private:

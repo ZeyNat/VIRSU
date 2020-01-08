@@ -16,11 +16,11 @@ int main(int argc, char **argv) {
   }
 
 
-  //string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/b.board";  //pour moi haha
-  string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/";  //pour toi hihi ;)
+  string teau = "/home/zeneb/Documents/M1_MIC/LOA/PROJET/";
+  //string teau = "/home/natacha/Documents/M1MIC/LOA/Projet/";
   string game = teau + argv[1] + ".game";
 
-  int lvl = 1;
+  int lvl = 1; //niveau du Oueurj
 
   ifstream f;
   f.open(game);
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     cout << " Niveau : " << lvl << endl;
     T.affiche();
     encore = T.deplaceOueurj(J);
-    lvl++;
+    lvl++; //on incremente le niveau si le Oueurj gagne la partie
 }
 
   return 0;
