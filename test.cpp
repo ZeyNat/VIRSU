@@ -66,6 +66,7 @@ int main(int argc, char **argv) {
 
   if(victoire){
     cout << endl << "Felicitations, vous avez gagné ! " << endl;
+    cout << "SCORE : " << J.getVies()*(J.getDiams()+J.getTP()) << endl;
     return 0;
   }
 
