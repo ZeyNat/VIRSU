@@ -43,20 +43,25 @@ int main(int argc, char **argv) {
     getline(f,line);
     J.incrementeDiams(stoi (line));
     getline(f,line);
-    J.setTP(stoi (line)-1);
+    J.addTP(stoi (line)-1);
+    getline(f,line);
+    J.setVies(stoi (line));
     getline(f,line);
     lvl = stoi (line) -1;
   }
 
 
   while(encore && getline(f,line)){
-    Teaupla T(teau+line);
     lvl++; //on incremente le niveau si le Oueurj passe un teaupla
-    cout << " Niveau : " << lvl << endl;
-    T.affiche();
-    encore = T.deplaceOueurj(J);
-    victoire = T.gagner(J);
-    defaite = T.defaite();
+    do{
+      Teaupla T(teau+line);
+      cout << " Niveau : " << lvl << endl;
+      T.affiche();
+      encore = T.deplaceOueurj(J);
+      victoire = T.gagner(J);
+      defaite = T.defaite();
+      if (defaite && J.getTP() == 0) {J.addTP(1);}
+    } while(defaite && J.getVies() > 0);
   }
 
   if(victoire){
@@ -65,7 +70,7 @@ int main(int argc, char **argv) {
   }
 
   //sauvegarde
-  if(!defaite){
+  if(J.getVies() != 0){
     string sauve;
     cout << "Souhaitez vous sauvegarder la partie ? (o/n)";
     cin >> sauve;

@@ -214,7 +214,7 @@ void Teaupla::teleportation(Oueurj* J){
   cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
 
   if (verifieGeuchars(xrand,yrand)){
-    J->setTP();  //on lui donne une TP
+    J->addTP();  //on lui donne une TP
   }
   else{
       if (verifieDiams(xrand,yrand)){ //si le oueurj veut recuperer un diams
@@ -232,6 +232,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
   char mouv;
   J.afficheDiams();
   cout << "Teleports : " << J.getTP() << endl;
+  cout << "Vies : " << J.getVies() << endl;
 
   do{ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
     cout<<"Jouer"<<endl;
@@ -243,7 +244,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     //deplacement au Nord
     if(mouv=='z' && posValide(x,y-1)){
         if (verifieGeuchars(x,y-1)){
-          J.setTP();  //on lui donne une TP
+          J.addTP();  //on lui donne une TP
         }
         else{
             if (verifieDiams(x,y-1)){ //si le oueurj veut recuperer un diams
@@ -263,7 +264,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='e' && posValide(x+1,y-1)){
 
       if (verifieGeuchars(x+1,y-1)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
 
       else{
@@ -284,7 +285,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='a' && posValide(x-1,y-1)){
 
       if (verifieGeuchars(x-1,y-1)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
 
       else{
@@ -305,7 +306,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='d' && posValide(x+1,y)){
 
       if (verifieGeuchars(x+1,y)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
 
       else{
@@ -326,7 +327,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='q' && posValide(x-1,y)){
 
       if (verifieGeuchars(x-1,y)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x-1,y)){
@@ -346,7 +347,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='x' && posValide(x,y+1)){
 
       if (verifieGeuchars(x,y+1)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
 
       else{
@@ -367,7 +368,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='c' && posValide(x+1,y+1)){
 
       if (verifieGeuchars(x+1,y+1)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x+1,y+1)){
@@ -387,7 +388,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     if(mouv=='w' && posValide(x-1,y+1)){
 
       if (verifieGeuchars(x-1,y+1)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x-1,y+1)){
@@ -406,7 +407,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
     //Teleportation
     if(mouv=='s' && J.hasTP()){
       if (verifieGeuchars(x-1,y+1)){
-        J.setTP();  //on lui donne une TP
+        J.addTP();  //on lui donne une TP
       }
       else{
         if (verifieDiams(x-1,y+1)){
@@ -418,19 +419,28 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
         teleportation(&J); //on teleporte
     }
 
-    perdu = deplaceStreumons(J);
+    if (mouv != '0') {
+      perdu = deplaceStreumons(J);
+    }
 
 
     affiche();
     J.afficheDiams();
     cout << "Teleports : " << J.getTP() << endl;
+    cout << "Vies : " << J.getVies() << endl;
     //afficheTeuport();
     if(gagner(J)){
       cout<<"BRAVOOOOOOOO !!!"<<endl;
     }
   } while(mouv!='0' && !perdu && !gagner(J));
 
-  if (perdu) {cout << "Perdu ! Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;}
+  if (perdu) {
+    cout << "Le Oueurj sest fait febou par un streumon ! NOMNOMNOM !!!" << endl;
+    J.perdVie();
+    if(J.getVies() == 0){
+      cout << endl << "GAME OVER" << endl;
+    }
+  }
   return gagner(J);
 }
 
