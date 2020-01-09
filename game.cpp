@@ -16,6 +16,8 @@ int main(int argc, char **argv){
   ofstream flux (nom.c_str());
   string nomBoard;
   char num = '1';
+
+  flux << "NS" << endl;   //Ce nest pas une sauvegarde
   for (int i = 1; i <= nbTeauplas; i++){
     nomBoard = "b";
     nomBoard += num;

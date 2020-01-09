@@ -8,7 +8,7 @@
 #include "Streumon.hpp"
 using namespace std;
 
-Teaupla::Teaupla(string nomFichier) : teuporsOuvertes{0} {
+Teaupla::Teaupla(string nomFichier) : teuporsOuvertes{0},perdu{false} {
   ifstream f;
   f.open(nomFichier);
   string line;
@@ -229,7 +229,6 @@ void Teaupla::teleportation(Oueurj* J){
 bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l'entrée clavier
   vector<int> coord = getCoordOueurj();
   J.setLocalisation(coord[0],coord[1]);
-  bool perdu = false;
   char mouv;
   J.afficheDiams();
   cout << "Teleports : " << J.getTP() << endl;
@@ -421,6 +420,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
 
     perdu = deplaceStreumons(J);
 
+
     affiche();
     J.afficheDiams();
     cout << "Teleports : " << J.getTP() << endl;
@@ -569,4 +569,8 @@ bool Teaupla::gagner(Oueurj J){
     }
   }
   return false;
+}
+
+bool Teaupla::defaite(){
+  return perdu;
 }

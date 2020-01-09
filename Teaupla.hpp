@@ -19,6 +19,7 @@ class Teaupla {
     vector<Zeca> teupors;
     unsigned int teuporsOuvertes;
     vector<Zeca> construitTeuports();
+    bool perdu;
 
 
   public :
@@ -56,6 +57,7 @@ class Teaupla {
     void teleportation(Oueurj* J);
 
     bool gagner(Oueurj J);
+    bool defaite();
 
 
 };

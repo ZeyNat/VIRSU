@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include  "Oueurj.hpp"
 using namespace std;
 
@@ -6,8 +7,8 @@ Oueurj::Oueurj(int x, int y,int d): _Deplacable(x,y), nbDiams{d}, TP{1} {}
 
 Oueurj::Oueurj(Oueurj J, int x, int y) : _Deplacable(x,y), nbDiams{J.getDiams()}, TP{J.getTP()} {}
 
-void Oueurj::incrementeDiams(){
-  nbDiams++;
+void Oueurj::incrementeDiams(int i){
+  nbDiams += i;
 }
 
 void Oueurj::decrementeDiams(){
@@ -26,8 +27,8 @@ bool Oueurj::hasTP(){
   return TP>0;
 }
 
-void Oueurj::setTP(){
-  TP+=2;
+void Oueurj::setTP(int i){
+  TP+=i;
 }
 
 void Oueurj::removeTP(){
@@ -36,4 +37,12 @@ void Oueurj::removeTP(){
 
 unsigned int Oueurj::getTP(){
   return TP;
+}
+
+ofstream Oueurj::sauvegardeOueurj(string f){
+  ofstream flux(f.c_str());
+  flux << "save" << endl;
+  flux << getDiams() << endl;
+  flux << getTP() << endl;
+  return flux;
 }
