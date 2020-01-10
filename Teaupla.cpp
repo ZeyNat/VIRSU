@@ -8,7 +8,7 @@
 #include "Streumon.hpp"
 using namespace std;
 
-Teaupla::Teaupla(string nomFichier) : teuporsOuvertes{0},perdu{false} {
+Teaupla::Teaupla(string nomFichier, int l) : teuporsOuvertes{0},lvl{l},perdu{false} {
   ifstream f;
   f.open(nomFichier);
   string line;
@@ -184,7 +184,7 @@ bool Teaupla::posSure(unsigned int x, unsigned int y){
 
 
 bool Teaupla::verifieDiams(int x, int y){
-  return (tab[y][x].getEtat()=='$');
+  return (tab[y][x].getEtat()=='d');
 }
 
 
@@ -230,12 +230,14 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
   vector<int> coord = getCoordOueurj();
   J.setLocalisation(coord[0],coord[1]);
   char mouv;
+  cout << "Niveau : " << lvl << endl;
+  affiche();
   J.afficheDiams();
   cout << "Teleports : " << J.getTP() << endl;
   cout << "Vies : " << J.getVies() << endl;
 
   do{ //on demande au oueurj de joueur tant qu'il ne veut pas quitter (0 pour quitter la partie)
-    cout<<"Jouer"<<endl;
+    cout<<"Jouer : ";
     cin>>mouv;
     int x = J.getX();
     int y = J.getY();
@@ -405,6 +407,7 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
 
 
     //Teleportation
+    bool tp = false;
     if(mouv=='s' && J.hasTP()){
       if (verifieGeuchars(x-1,y+1)){
         J.addTP();  //on lui donne une TP
@@ -417,20 +420,21 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
       }
         tab[y][x].setEtat(' ');
         teleportation(&J); //on teleporte
+        tp = true;
     }
 
-    if (mouv != '0') {
+    if (mouv != '0' && !tp) {
       perdu = deplaceStreumons(J);
     }
 
-
+    cout << endl << "Niveau : " << lvl << endl;
     affiche();
     J.afficheDiams();
     cout << "Teleports : " << J.getTP() << endl;
     cout << "Vies : " << J.getVies() << endl;
     //afficheTeuport();
     if(gagner(J)){
-      cout<<"BRAVOOOOOOOO !!!"<<endl;
+      cout<<"BRAVOOOOOOOO !!!"<<endl << endl;
     }
   } while(mouv!='0' && !perdu && !gagner(J));
 

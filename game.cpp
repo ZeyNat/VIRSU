@@ -1,10 +1,10 @@
 #include <iostream>
 #include <time.h>
 #include <fstream>
-#include "board.hpp"
 #include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
+#include "board.hpp"
 using namespace std;
 
 

@@ -1,8 +1,6 @@
 #include <iostream>
 #include <assert.h>   //pour tester nos fcts
 #include <fstream>
-#include <sstream>
-#include <string>
 #include "Teaupla.hpp"
 #include "Oueurj.hpp"
 #include "Streumon.hpp"
@@ -54,9 +52,7 @@ int main(int argc, char **argv) {
   while(encore && getline(f,line)){
     lvl++; //on incremente le niveau si le Oueurj passe un teaupla
     do{
-      Teaupla T(teau+line);
-      cout << " Niveau : " << lvl << endl;
-      T.affiche();
+      Teaupla T(teau+line,lvl);
       encore = T.deplaceOueurj(J);
       victoire = T.gagner(J);
       defaite = T.defaite();
@@ -66,12 +62,12 @@ int main(int argc, char **argv) {
 
   if(victoire){
     cout << endl << "Felicitations, vous avez gagné ! " << endl;
-    cout << "SCORE : " << J.getVies()*(J.getDiams()+J.getTP()) << endl;
+    cout << "SCORE : " << J.getVies()*J.getDiams()*lvl + J.getTP() << endl;
     return 0;
   }
 
   //sauvegarde
-  if(J.getVies() != 0){
+  if(J.getVies() > 0){
     string sauve;
     cout << "Souhaitez vous sauvegarder la partie ? (o/n)";
     cin >> sauve;

@@ -5,20 +5,26 @@
 #include <cstdlib>
 using namespace std;
 
+//taille maximale de teaupla
 const unsigned int MAX_X_len = 27;
 const unsigned int MAX_Y_len = 13;
 
+//taille minimale de teaupla
 const unsigned int MIN_X_len = 9;
 const unsigned int MIN_Y_len = 7;
 
-const unsigned int grandeGrille = 30;
+const unsigned int grandeGrille = 30; //a partir de quand le teaupla est dit grand
 
+//max pour chaque element
 const unsigned int maxStreumons = 3;
 const unsigned int maxTeupors = 3;
 const unsigned int maxGeurchars = 3;
 
 
-
+/*Fonction de construction du teaupla
+ *construit un teaupla de taille aleatoire
+ *dont toutes les zecas ont un contenu vide
+ */
 vector<vector<char> > constructionGrille(unsigned int X, unsigned int Y){
   vector<char> ligne;
   vector<vector<char> > res;
@@ -32,11 +38,14 @@ vector<vector<char> > constructionGrille(unsigned int X, unsigned int Y){
   return res;
 }
 
+//Une position est dite valide si la zeca est vide
 bool posValide(vector<vector<char> > grille,unsigned int x,unsigned int y){
   return grille[x][y] == ' ';
 }
 
-
+/*Fonction de construction des reumus
+ *ajoute a un teaupla vide des reumus sur les bords
+ */
 void constructionReumus(vector<vector<char> > & grille){
   unsigned int X = grille.size();
   unsigned int Y = grille[0].size();
@@ -50,7 +59,10 @@ void constructionReumus(vector<vector<char> > & grille){
 }
 
 
-//Pour ajouter les diams, les teleports et les streumons
+/*Fonction dajout
+ *ajoute un diams, un streumon ou un geurchars
+ *caracterise par un char
+ */
 void ajoutTruc(vector<vector<char> > &grille, char c, int nb){
   unsigned int xTruc;
   unsigned int yTruc;
@@ -63,6 +75,8 @@ void ajoutTruc(vector<vector<char> > &grille, char c, int nb){
   }
 }
 
+
+/*Fonction daffichage pour tester*/
 void affiche(vector<vector<char> > grille){
   for (unsigned int i = 0; i < grille.size(); i++){
     for (unsigned int j = 0; j < grille[0].size(); j++){
@@ -72,6 +86,7 @@ void affiche(vector<vector<char> > grille){
   }
 }
 
+/*Fonction dajout des teupors*/
 void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
   unsigned int xTeupor;
   unsigned int yTeupor;
@@ -86,7 +101,10 @@ void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
 }
 
 
-// pos sure : pas de streumon juste a cote
+/* Renvoie si la posotion est sure ou non
+ * une position est dite sure
+ * sil ny a pas de streumon dans un rayon de deux zecas
+ */
 bool posSure(vector<vector<char> > grille, unsigned int x, unsigned int y){
   unsigned int X = grille.size();
   unsigned int Y = grille[0].size();
@@ -152,7 +170,7 @@ bool posSure(vector<vector<char> > grille, unsigned int x, unsigned int y){
 }
 
 
-
+/*Fonction dajout du oueurj a une posSure*/
 void ajoutOueurj(vector<vector<char> > &grille){
   unsigned int xOueurj;
   unsigned int yOueurj;
@@ -165,7 +183,9 @@ void ajoutOueurj(vector<vector<char> > &grille){
 }
 
 
-
+/*Fonction decriture
+ *recopie une grille donnee dans un fichier texte donne
+ */
 void ecriture(vector<vector<char> > grille,ofstream &flux){
   for (unsigned int i = 0; i < grille.size(); i++){
     for (unsigned int j = 0; j < grille[0].size(); j++){
@@ -177,7 +197,11 @@ void ecriture(vector<vector<char> > grille,ofstream &flux){
 
 
 
-
+/* Fonction de creation dun board
+ * utilise les fonctions precedentes pour creer un teaupla complet
+ * puis le recopie dans un fichier texte
+ * dont le nom est donne en parametre
+ */
 void createBoard(string nom) {
 
     unsigned int X = rand()%(MAX_X_len-MIN_X_len) + MIN_X_len + 1;
@@ -197,7 +221,7 @@ void createBoard(string nom) {
     vector<vector<char> > grille = constructionGrille(X,Y);
     constructionReumus(grille);
     ajoutTeupors(grille,nbTeupors);
-    ajoutTruc(grille,'$',nbTeupors);
+    ajoutTruc(grille,'d',nbTeupors);
     ajoutTruc(grille,'*',nbGeurchars);
     ajoutTruc(grille,'s',nbStreumon);
     ajoutOueurj(grille);
