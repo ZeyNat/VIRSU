@@ -18,16 +18,17 @@ RÈGLES :
 
 Le oueurj se déplace de la façon suivante :
 
-A : NO  Z : N
-E : NE
-Q : O
-D : E
-W : SO
-X : S
-C : SE
-S : Téléportation sur une case aléatoire
-0 : Quitter la partie
-
+  A : NO  
+  Z : N
+  E : NE
+  Q : O
+  D : E
+  W : SO
+  X : S
+  C : SE
+  S : Téléportation sur une case aléatoire
+  0 : Quitter la partie
+  
 Pour obtenir 2 téléportations, il faut ramasser un geurchar '*'.
 
 Le but : sortir de VIRSU indemne en ayant collecté un maximum de diams.
