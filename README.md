@@ -18,8 +18,7 @@ RÈGLES :
 
 Le oueurj se déplace de la façon suivante :
 
-A : NO 
-Z : N
+A : NO  Z : N
 E : NE
 Q : O
 D : E
