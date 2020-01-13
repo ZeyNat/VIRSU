@@ -13,10 +13,13 @@ int main(int argc, char **argv) {
 
   if(argc < 2) {
     cout << "Veuillez donner un fichier game" << endl;
+    cout << "Pour plus dinformations, veuillez consulter le fichier README.md" << endl;
     return 0;
   }
 
   cout << "BIENVENUE DANS LE VIRSU !!!" << endl << endl;
+
+  cout << "Pour les regles, veuillez consulter le fichier README.md" << endl;
 
   /*chemin pour acceder aux fichiers de jeu*/
   string game = argv[1];
