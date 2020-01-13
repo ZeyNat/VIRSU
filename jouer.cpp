@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
   string game = argv[1];
   game += ".game";
 
-  //onverture du fichier .game et preparatifs a la lecture
+  //ouverture du fichier .game et preparatifs a la lecture
   ifstream f;
   f.open(game);
   string line;
