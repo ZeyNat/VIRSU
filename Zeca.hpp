@@ -11,8 +11,7 @@ class Zeca{
     char etat; //oueurj = J / streumons = s / remus = X / diams = d / geurchars = * /teupors = p / vide =' '
 
   public:
-    //constructeurs
-    Zeca();
+    //constructeur
     Zeca(int x, int y, char e);
 
     //getteurs pour X et Y

@@ -1,15 +1,15 @@
 CPP=g++ --std=c++11 -Wall
 
-all :  test game
+all :  jouer game
 
 game : game.o
 	$(CPP) -o game game.o
 game.o : game.cpp board.hpp
 	$(CPP) -c game.cpp
-test : test.o Teaupla.o Zeca.o Oueurj.o Streumon.o
-	$(CPP) -o test test.o Teaupla.o Zeca.o Oueurj.o Streumon.o
-test.o : test.cpp Teaupla.hpp Zeca.hpp Oueurj.hpp Streumon.hpp Deplacable.hpp
-	$(CPP) -c test.cpp
+jouer : jouer.o Teaupla.o Zeca.o Oueurj.o Streumon.o
+	$(CPP) -o jouer jouer.o Teaupla.o Zeca.o Oueurj.o Streumon.o
+jouer.o : jouer.cpp Teaupla.hpp Zeca.hpp Oueurj.hpp Streumon.hpp Deplacable.hpp
+	$(CPP) -c jouer.cpp
 Teaupla.o : Teaupla.cpp Teaupla.hpp Zeca.hpp Oueurj.hpp Streumon.hpp Deplacable.hpp
 	$(CPP) -c Teaupla.cpp
 Zeca.o : Zeca.cpp Zeca.hpp

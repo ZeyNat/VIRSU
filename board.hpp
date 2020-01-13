@@ -108,6 +108,7 @@ void ajoutTeupors(vector<vector<char> > &grille, unsigned int nbTeupors){
 bool posSure(vector<vector<char> > grille, unsigned int x, unsigned int y){
   unsigned int X = grille.size();
   unsigned int Y = grille[0].size();
+  //rayon 1
   if (posValide(grille,x,y)
         && grille[x][y-1]!='s'
         && grille[x][y]!='s'
@@ -122,6 +123,7 @@ bool posSure(vector<vector<char> > grille, unsigned int x, unsigned int y){
         && grille[x-1][y+1]!='s')
 
         {
+          //rayon 2
           if (y+2 < Y){
             if(grille[x-1][y+2]=='s' && grille[x][y+2]=='s' && grille[x+1][y+2]=='s'){
               return false;
@@ -204,31 +206,34 @@ void ecriture(vector<vector<char> > grille,ofstream &flux){
  */
 void createBoard(string nom) {
 
-    unsigned int X = rand()%(MAX_X_len-MIN_X_len) + MIN_X_len + 1;
-    unsigned int Y = rand()%(MAX_Y_len-MIN_Y_len) + MIN_Y_len + 1;
+  //On tire aleatoirement la taille du board
+  unsigned int X = rand()%(MAX_X_len-MIN_X_len) + MIN_X_len + 1;
+  unsigned int Y = rand()%(MAX_Y_len-MIN_Y_len) + MIN_Y_len + 1;
 
-    unsigned int nbStreumon = rand()%maxStreumons +1;
-    unsigned int nbTeupors = rand()%maxTeupors +1;
-    unsigned int nbGeurchars = rand()%maxGeurchars +1;
+  //on tire aleatoirement le nombre de streumon,teupors et geurchars
+  unsigned int nbStreumon = rand()%maxStreumons +1;
+  unsigned int nbTeupors = rand()%maxTeupors +1;
+  unsigned int nbGeurchars = rand()%maxGeurchars +1;
 
-    if (X+Y >= grandeGrille){
-      nbStreumon ++;
-      nbTeupors ++;
-      nbGeurchars ++;
-    }
+  //si la grille est grande, on augmente tout de 1
+  if (X+Y >= grandeGrille){
+    nbStreumon ++;
+    nbTeupors ++;
+    nbGeurchars ++;
+  }
 
+  //construction
+  vector<vector<char> > grille = constructionGrille(X,Y); //la grille vide
+  constructionReumus(grille);                             //les reumus
+  ajoutTeupors(grille,nbTeupors);                         //les teupors
+  ajoutTruc(grille,'d',nbTeupors);                        //les diams
+  ajoutTruc(grille,'*',nbGeurchars);                      //les geurchars
+  ajoutTruc(grille,'s',nbStreumon);                       //les streumons
+  ajoutOueurj(grille);                                    //le oueurj
 
-    vector<vector<char> > grille = constructionGrille(X,Y);
-    constructionReumus(grille);
-    ajoutTeupors(grille,nbTeupors);
-    ajoutTruc(grille,'d',nbTeupors);
-    ajoutTruc(grille,'*',nbGeurchars);
-    ajoutTruc(grille,'s',nbStreumon);
-    ajoutOueurj(grille);
+  ofstream flux(nom.c_str()); //on cree le fichier
 
-    ofstream flux(nom.c_str());
-
-    ecriture(grille,flux);
+  ecriture(grille,flux); //on recopie la grille
 
 
 }

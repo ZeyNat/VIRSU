@@ -10,9 +10,8 @@ class Oueurj : public _Deplacable{
     unsigned int TP; //les teleports ramassés
     int vies; //nombre de vies restantes, 0 = game over
   public:
-    //constructeurs
+    //constructeur
     Oueurj(int x=0, int y=0, int d = 0, int v = 3);
-    Oueurj(Oueurj j, int x, int y);
 
     //gestion des diams
     void incrementeDiams(int i = 1);

@@ -8,13 +8,18 @@
 #include "Streumon.hpp"
 using namespace std;
 
-Teaupla::Teaupla(string nomFichier, int l) : teuporsOuvertes{0},lvl{l},perdu{false} {
+
+/*Constructeur*/
+
+Teaupla::Teaupla(string nomFichier, int l) : lvl{l},teuporsOuvertes{0},perdu{false} {
+  //Ouverture fichier .board et preparatifs lecture
   ifstream f;
   f.open(nomFichier);
   string line;
   unsigned int i = 0;
   int maxX = 0;
   vector<Zeca> v;
+
   //lecture fichier et init des Zecas
   while(getline(f,line)){
     for (unsigned int j = 0; j < line.length(); j++){
@@ -24,18 +29,22 @@ Teaupla::Teaupla(string nomFichier, int l) : teuporsOuvertes{0},lvl{l},perdu{fal
     i++;
     tab.push_back(v);
     v.clear();
-    }
-  sizeY = i;   //sauvegarde taille du teaupla
+  }
+
+  //sauvegarde taille du teaupla
+  sizeY = i;
   sizeX = (unsigned int) maxX;
 
+  //contruction des streumons et des teupors
   streumons = construitStreumons();
   teupors = construitTeuports();
 
-  srand (time(NULL));
+  srand (time(NULL));  //initialisation germe aleatoire
 }
 
 
 
+/*Fonctions de construction*/
 
 vector<Streumon> Teaupla::construitStreumons(){
   vector<Streumon> s;
@@ -66,6 +75,14 @@ vector<Zeca> Teaupla::construitTeuports(){
 
 
 
+/*Getteurs taille teaupla*/
+
+unsigned int Teaupla::getMaxX(){ return sizeX;}
+unsigned int Teaupla::getMaxY(){ return sizeY;}
+
+
+
+/*Affichage*/
 
 void Teaupla::affiche(){
   for (unsigned int i = 0 ; i < sizeY; i++){
@@ -78,17 +95,11 @@ void Teaupla::affiche(){
 
 
 
-
-unsigned int Teaupla::getMaxX(){ return sizeX;}
-
-unsigned int Teaupla::getMaxY(){ return sizeY;}
+/*Getteurs Streumons,teupors et coordonnes oueurj*/
 
 vector<Streumon> Teaupla::getStreumons() {return streumons;}
 
 vector<Zeca> Teaupla::getTeuports() {return teupors;}
-
-
-
 
 vector<int> Teaupla::getCoordOueurj(){
   for (int i = 0;(unsigned int) i < sizeY; i++){
@@ -103,6 +114,7 @@ vector<int> Teaupla::getCoordOueurj(){
 
 
 
+/*Fonctions test position*/
 
 //pos non valide =  hors teaupla, reumu, teupor
 bool Teaupla::posValide(int x, int y){
@@ -181,50 +193,7 @@ bool Teaupla::posSure(unsigned int x, unsigned int y){
 }
 
 
-
-
-bool Teaupla::verifieDiams(int x, int y){
-  return (tab[y][x].getEtat()=='d');
-}
-
-
-
-
-
-bool Teaupla::verifieGeuchars(int x, int y){
-  return (tab[y][x].getEtat()=='*');
-}
-
-
-
-
-void Teaupla::teleportation(Oueurj* J){
-  int xrand;
-  int yrand;
-  int x = J->getX();
-  int y = J->getY();
-  do{
-    xrand = rand()%(getMaxX());
-    yrand = rand()%(getMaxY());
-  } while(!posSure(xrand,yrand));
-  tab[y][x].setEtat(' ');
-  J->setLocalisation(xrand,yrand);
-  tab[yrand][xrand].setEtat('J'); //mise à jour de la place du oueurj
-  J->removeTP();
-  cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
-
-  if (verifieGeuchars(xrand,yrand)){
-    J->addTP();  //on lui donne une TP
-  }
-  else{
-      if (verifieDiams(xrand,yrand)){ //si le oueurj veut recuperer un diams
-        J->incrementeDiams();
-        ouvreTeuport();
-      }
-    }
-}
-
-
+/*Fonction de deplacement*/
 
 bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l'entrée clavier
   vector<int> coord = getCoordOueurj();
@@ -449,23 +418,6 @@ bool Teaupla::deplaceOueurj(Oueurj& J){ //deplacement du oueurj en fonction de l
 }
 
 
-
-
-//ouvre une porte aleatoirement
-void Teaupla::ouvreTeuport(){
-    if(teupors.size() == teuporsOuvertes)  {return;}
-    int i;
-    do{
-      i=rand()%(getTeuports().size());
-    } while(teupors.at(i).getEtat()!='-');
-    cout<<"OULALAAAA"<<endl;
-    teupors.at(i).setEtat('+');
-    tab[teupors.at(i).getX()][teupors.at(i).getY()].setEtat('+');
-    teuporsOuvertes++;
-}
-
-
-
 //return true si un streumon a foubé le oueurj.
 bool Teaupla::deplaceStreumons(Oueurj J){
   int xJ = J.getX();
@@ -561,20 +513,69 @@ bool Teaupla::deplaceStreumons(Oueurj J){
   return false;
 }
 
+//teleporte a une posSure aleatoire
+void Teaupla::teleportation(Oueurj* J){
+  int xrand;
+  int yrand;
+  int x = J->getX();
+  int y = J->getY();
+  do{
+    xrand = rand()%(getMaxX());
+    yrand = rand()%(getMaxY());
+  } while(!posSure(xrand,yrand));
+  tab[y][x].setEtat(' ');
+  J->setLocalisation(xrand,yrand);
+  tab[yrand][xrand].setEtat('J'); //mise à jour de la place du oueurj
+  J->removeTP();
+  cout<< "Vous vous etes TELEPORTES à la position (" << xrand <<',' << yrand << ")" << endl;
 
-
-
-void Teaupla::afficheTeuport(){
-  cout<<"****************"<<endl;
-  cout<< "Teuport : " <<endl;
-  for (unsigned int z=0; z<teupors.size(); z++){
-    cout<<teupors[z].getEtat()<<endl;
+  if (verifieGeuchars(xrand,yrand)){
+    J->addTP();  //on lui donne une TP
   }
-  cout<<"****************"<<endl;
+  else{
+      if (verifieDiams(xrand,yrand)){ //si le oueurj veut recuperer un diams
+        J->incrementeDiams();
+        ouvreTeuport();
+      }
+    }
 }
 
 
 
+
+/*Fonctions de gestion des diams et geurchars*/
+
+
+bool Teaupla::verifieDiams(int x, int y){
+  return (tab[y][x].getEtat()=='d');
+}
+
+
+bool Teaupla::verifieGeuchars(int x, int y){
+  return (tab[y][x].getEtat()=='*');
+}
+
+
+
+/*Ouverture de teupors*/
+
+//ouvre une porte aleatoirement
+void Teaupla::ouvreTeuport(){
+    if(teupors.size() == teuporsOuvertes)  {return;}
+    int i;
+    do{
+      i=rand()%(getTeuports().size());
+    } while(teupors.at(i).getEtat()!='-');
+    cout<<"OULALAAAA"<<endl;
+    teupors.at(i).setEtat('+');
+    tab[teupors.at(i).getX()][teupors.at(i).getY()].setEtat('+');
+    teuporsOuvertes++;
+}
+
+
+
+
+/*Fonctions de victoire/defaite*/
 
 bool Teaupla::gagner(Oueurj J){
   for (unsigned int z=0; z<teupors.size(); z++){
@@ -584,6 +585,7 @@ bool Teaupla::gagner(Oueurj J){
   }
   return false;
 }
+
 
 bool Teaupla::defaite(){
   return perdu;

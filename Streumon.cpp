@@ -3,8 +3,11 @@
 #include "Deplacable.hpp"
 using namespace std;
 
-//Streumon::Streumon() {}
+/*Constructeur*/
 Streumon::Streumon(int x,int y) : _Deplacable(x,y) , sousSesPieds{' '}{}
+
+
+/*Gestion attribut sousSesPieds*/
 
 char Streumon::getSousSesPieds() {return sousSesPieds;}
 

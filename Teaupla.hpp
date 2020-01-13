@@ -53,16 +53,13 @@ class Teaupla {
 
     bool deplaceOueurj(Oueurj& Jold);
     bool deplaceStreumons(Oueurj J);   //deplace les streumons vers le joueur J
+    void teleportation(Oueurj* J); //teleporte le oueurj a une posSure
 
     bool verifieDiams(int x, int y); //verifie si la zeca a un diams
-    void updateDiams(); //mise à jour des diams ramassés par le oueurj
-
-    void ouvreTeuport(); //ouvre une teupor au hasard
-    void afficheTeuport();
 
     bool verifieGeuchars(int x, int y); //verifie si la zeca a un geurchar
 
-    void teleportation(Oueurj* J); //teleporte le oueurj a une posSure
+    void ouvreTeuport(); //ouvre une teupor au hasard
 
     bool gagner(Oueurj J); //estce que le oueurj est sur une teupor ouverte
     bool defaite(); //renvoie la valeur de perdu
